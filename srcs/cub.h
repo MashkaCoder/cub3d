@@ -14,6 +14,7 @@
 //Функции общего назначения (utils.c)
 void	ft_error(t_data *data, char *msg, int op);
 int		ft_open(char *flnm);
+void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln);
 
 //Очистка памяти (free.c)
 void	ft_free_data(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 18:36:49 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 19:32:07 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,7 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 	check = 0;
 	while (gnl != 0 && check != 6)
 	{
-		gnl = ft_get_next_line(fd, line);
-		if (gnl == -1)
-		{
-			if (close(fd) == -1)
-				ft_error(data, "GNL and close", 0);
-			ft_free_arr(data->map, i);
-			ft_error(data, "GNL", 0);
-		}
+		ft_gnl_read(data, gnl, fd, line);
 		ft_check_write_params(data, line, &check);
 		i++;
 	}
