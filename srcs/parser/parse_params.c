@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 19:32:07 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 19:45:50 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,6 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 		ft_check_write_params(data, line, &check);
 		i++;
 	}
+	if (check < 6)
+		ft_error(data, "Not enough argumetns", 0);
 }

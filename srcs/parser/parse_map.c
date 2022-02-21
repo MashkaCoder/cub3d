@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:49:59 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 19:42:21 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 19:46:30 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	ft_parse_map(t_data *data, int fd)
 
 	ln = ft_calloc(1, 1);
 	ft_parse_params(data, &gnl, &ln, fd);
+	ft_gnl_read(data, &gnl, fd, &ln);
 	while (gnl != 0 && ln[0] == '\n')
 		ft_gnl_read(data, &gnl, fd, &ln);
 	while (gnl != 0)
