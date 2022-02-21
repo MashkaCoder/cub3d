@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:20:45 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 18:46:25 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:53:36 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,36 +71,4 @@ char	**ft_arr_plus_one(char ***sub_arr, char *str, int i, int ln)
 	if (*sub_arr == NULL)
 		return (NULL);
 	return (*sub_arr);
-}
-
-/*
-	Функция вытаскивает нуль-терменированную подстроку
-	из нуль-терменированной строки.
-
-	Принимаемые аргументы:
-
-		1) char	*str - изначальная строка;
-		2) int	start - номер символа, с которого ачинается подстрока;
-		3) int	ln - длина подстроки.
-
-	Возвращаемое значение:
-
-		char *prt - нуль-терменированная строка.
-*/
-char	*ft_strprt(char *str, int start, int ln)
-{
-	char	*prt;
-	int		i;
-
-	prt = malloc(sizeof(char) * (ln + 1));
-	if (prt == NULL)
-		return (NULL);
-	prt[ln] = '\0';
-	i = 0;
-	while (i < ln)
-	{
-		prt[i] = str[start + i];
-		i++;
-	}
-	return (prt);
 }
