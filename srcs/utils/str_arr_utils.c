@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:44:14 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 18:47:35 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:57:31 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,26 @@ int	ft_arrlen(char **arr)
 	while (arr[i] != NULL)
 		i++;
 	return (i);
+}
+
+char	**ft_arrdup(char **arr)
+{
+	char	**new_arr;
+	int		i;
+
+	i = 0;
+	new_arr = malloc(sizeof(char *) * (ft_arrlen(arr) + 1));
+	if (new_arr == NULL)
+		return (NULL);
+	while (arr[i] != NULL)
+	{
+		new_arr[i] = ft_strdup(arr[i]);
+		if (new_arr[i] == NULL)
+			return (ft_free_arr(new_arr, i));
+		i++;
+	}
+	new_arr[i] = NULL;
+	return (new_arr);
 }
 
 // Дополняет массив big с элемента bln значениями массива small 

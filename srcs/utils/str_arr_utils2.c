@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:20:45 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 18:53:36 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:57:21 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,3 +72,4 @@ char	**ft_arr_plus_one(char ***sub_arr, char *str, int i, int ln)
 		return (NULL);
 	return (*sub_arr);
 }
+
