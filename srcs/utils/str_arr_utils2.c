@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:20:45 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/16 18:40:55 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:46:25 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_putarr_fd(char **arr, int fd)
 	}
 }
 
-char	**ft_strtoarr(char *str)
+static char	**ft_strtoarr(char *str)
 {
 	char	**arr;
 
@@ -103,48 +103,4 @@ char	*ft_strprt(char *str, int start, int ln)
 		i++;
 	}
 	return (prt);
-}
-
-/*
-	Удаляет символ из строки
-
-	Принимаемые аргументы:
-
-		1) char		**s - указатель на изначальную строку;
-		2) char		*a - номер символа, который требуется удалить;
-
-	Возвращаемое значение:
-
-		int - проверочное значение. 0 в случае ОШИБКИ!!!
-*/
-int	ft_remove_symb(char **str, int num)
-{
-	char	*tmp;
-	int		i;
-
-	tmp = ft_strdup(*str);
-	if (tmp == NULL)
-		return (-1);
-	free(*str);
-	i = ft_strlen(tmp);
-	if (i == 0)
-		i++;
-	*str = malloc(sizeof(char) * (i));
-	i = 0;
-	if (*str != NULL)
-	{
-		while (i < num)
-		{
-			(*str)[i] = tmp[i];
-			i++;
-		}
-		while (tmp[i + 1] != '\0')
-		{
-			(*str)[i] = tmp[i + 1];
-			i++;
-		}
-		(*str)[i] = '\0';
-	}
-	free(tmp);
-	return (i);
 }

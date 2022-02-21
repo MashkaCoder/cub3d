@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:44:14 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/16 19:21:44 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/21 18:46:57 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,6 @@ int	ft_arrlen(char **arr)
 	while (arr[i] != NULL)
 		i++;
 	return (i);
-}
-
-char	**ft_free_arr(char **arr, int ln)
-{
-	int	i;
-
-	if (arr != NULL && arr[0] != NULL)
-	{
-		i = 0;
-		while (i < ln)
-		{
-			if (arr[i] != NULL)
-				free(arr[i]);
-			else
-				break;
-			i++;
-		}
-			free(arr);
-	}
-	return (NULL);
 }
 
 char	**ft_arrdup(char **arr)
