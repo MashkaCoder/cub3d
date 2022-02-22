@@ -1,4 +1,4 @@
-#include "cub.h"
+#include "../cub.h"
 
 int	ft_free_arr(char **arr, int ln)
 {
@@ -19,9 +19,8 @@ int	ft_free_arr(char **arr, int ln)
 		ft_bzero(arr, sizeof(char *));
 		free(arr);
 	}
+	return (0); // сори, ругается, что ничего не возвращается
 }
-
-
 
 void	ft_free_data(t_data *data)
 {
