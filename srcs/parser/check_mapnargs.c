@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 17:36:55 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/22 18:45:13 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,7 @@
 // Референс, переделать
 static void	ft_check_help(char **map, int *i, int *len, int *f_len)
 {
-	while ((*map)[*i] != '\0')
-	{
-		(*i)++;
-		if ((*map)[(*i)] != '\0' && (*map)[(*i)] != '1')
-			ft_error(data, "Frame is not full", 0);
-		while ((*map)[(*i)] != '\n' && (*map)[(*i)] != '\0')
-		{
-			(*i)++;
-			(*len)++;
-		}
-		if ((*len) != (*f_len) && !((*len) == 0 && (*map)[(*i)] == '\0'))
-			ft_error(data, "Map is not rectangular", 0);
-		if ((*map)[(*i) - 1] != '1')
-			ft_error(data, "Frame is not full", 0);
-		(*len) = 0;
-	}
+	
 }
 
 // Референс, переделать
@@ -71,7 +56,7 @@ static void	ft_check_strangers_fullness(t_data *data, char *mp)
 			&& mp[i] != 'E' && mp[i] != '\n' && mp[i] != 'W' && mp[i] != ' ')
 		{
 			mp[i + 1] = '\0';
-			ft_error(ft_strjoin("Illegal character ", &(mp[i])), 0);
+			ft_error(data, ft_strjoin("Illegal character ", &(mp[i])), 0);
 		}
 		if (mp[i] == 'S' || mp[i] == 'N' || mp[i] == 'W' || mp[i] == 'E')
 			p++;
