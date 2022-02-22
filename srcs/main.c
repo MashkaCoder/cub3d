@@ -36,7 +36,7 @@ static void	ft_check_format(char *name)
 t_data *ft_data_init(int fd)
 {
 	t_data	*data;
-	
+
 	data = (t_data *)malloc(sizeof(t_data));
 	if (data == NULL)
 		ft_error(data, "Data initialization", 0);

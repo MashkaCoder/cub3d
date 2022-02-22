@@ -17,7 +17,7 @@ static int	ft_parse_rgb(t_data *data, char **tmp, int *op[3])
 	char	**rgb;
 	int		i;
 	int		num;
-	
+
 	rgb = ft_split(tmp[1], ',');
 	if (rgb == NULL || ft_arrlen(rgb) != 3)
 	{
