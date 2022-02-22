@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 19:42:14 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/22 21:22:25 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_data *ft_data_init(int fd)
 	ft_parse_map(data, fd);
 	if (data->map == NULL)
 		ft_error(data, "Map didn't parsed or file is empty", 0);
-	ft_check_mapnargs(data);ft_check_strangers_fullness(data->map);ft_check_frame(data->map, 0, 0, 0);
+	ft_check_mapnargs(data);
 	return (data);
 }
 

@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 19:45:50 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/22 20:42:23 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ static void	ft_check_write_params(t_data *data, char **line, int *check)
 	sln = ft_strlen(tmp[0]);
 	if (aln != 2 || sln > 2 || sln < 1 || ft_data_write(data, tmp, aln, sln))
 	{
-			ft_free_arr(tmp, 2);
-			ft_error(data, "Wrong map parameters", 0);
+		ft_free_arr(tmp, 2);
+		ft_error(data, "Wrong map parameters", 0);
 	}
 	ft_free_arr(tmp, 2);
 	(*check)++;
@@ -107,6 +107,6 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 		ft_check_write_params(data, line, &check);
 		i++;
 	}
-	if (check < 6)
+	if (check != 6)
 		ft_error(data, "Not enough argumetns", 0);
 }
