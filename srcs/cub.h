@@ -21,6 +21,9 @@
 void	ft_error(t_data *data, char *msg, int op);
 int		ft_open(char *flnm);
 void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln);
+
+//Функции для работы с массивом
+char	**ft_arr_plus_one(char ***sub_arr, char *str, int i, int ln);
 int		ft_arrlen(char **arr);
 
 //Очистка памяти (free.c)
