@@ -6,11 +6,18 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:09:19 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 19:30:53 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/23 18:48:40 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+void	ft_error_fd(t_data *data, char *msg, int op, int fd)
+{
+	if (close(fd) == -1)
+		ft_error(data, "е**ть", 0);
+	ft_error(data, msg, op);
+}
 
 void	ft_error(t_data *data, char *msg, int op)
 {
