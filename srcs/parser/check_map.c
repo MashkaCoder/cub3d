@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/23 18:42:31 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/26 22:24:54 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 	while (m[y + 1] != NULL)
 	{
 		ft_to_width(data, y, ft_strlen(data->map[y]), 0);
-		if (data->map[y] == NULL);
+		if (data->map[y] == NULL)
 		{
 			while(data->map[y + 1] != NULL)
 			{
@@ -91,7 +91,7 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 		data->high++;
 	}
 	i = 0;
-	while (ft_strlen(map[i]) < data->width)
+	while ((int)ft_strlen(map[i]) < data->width)
 	{
 		ft_to_width(data, i, ft_strlen(map[i]), 0);
 		i++;

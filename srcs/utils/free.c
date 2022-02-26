@@ -6,13 +6,13 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/23 18:46:16 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/26 22:34:10 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
 
-int	ft_free_arr(char **arr, int ln)
+char	**ft_free_arr(char **arr, int ln)
 {
 	int i;
 
@@ -31,7 +31,7 @@ int	ft_free_arr(char **arr, int ln)
 		ft_bzero(arr, sizeof(char *));
 		free(arr);
 	}
-	return (0);
+	return (NULL);
 }
 
 void	ft_free_data(t_data *data)
