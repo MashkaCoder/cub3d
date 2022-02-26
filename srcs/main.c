@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/23 18:49:18 by scoach           ###   ########.fr       */
+/*   Updated: 2022/02/26 23:29:52 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	main(int argc, char *argv[])
 		ft_free_data(data);
 		ft_error(data, ft_itoa(fd), 1);
 	}
-	ft_check_mapnargs(data);
+	ft_check_map(data);
 	ft_cub(data);
 	exit(EXIT_SUCCESS);
 }
