@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/26 23:28:55 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/01 20:05:43 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 	int	i;
 	int	check;
 
+	*line = ft_calloc(1, 1);
 	i = 0;
 	check = 0;
 	data->floor[0] = -1;
@@ -129,4 +130,5 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 	}
 	if (check != 6)
 		ft_error(data, "Not enough argumetns", 0);
+	//ft_open_args(data);
 }

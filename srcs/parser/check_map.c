@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/26 22:24:54 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/01 21:09:27 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 		while (map[data->high - 1][i] != '\0')
 		{
 			if (map[data->high][i] != '1' && map[data->high - 1][i] != ' ')
+			{
+				ft_putarr_fd(data->map, 1);
 				ft_error(data, "Frame is not full!", 0);
+			}
 			i++;
 		}
 		data->high++;
@@ -98,7 +101,7 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 	}
 }
 
-static void	ft_check_strangers_fullness(t_data *data, char *m, int j)
+static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 {
 	int i;
 	int p;
@@ -121,24 +124,27 @@ static void	ft_check_strangers_fullness(t_data *data, char *m, int j)
 		}
 		i++;
 	}
-	if (p < 1)
-		ft_error(data, "Where is starting character?", 0);
-	if (p > 1)
-		ft_error(data, "Too many starting characters", 0);
+	return (p);
 }
 
 void	ft_check_map(t_data *data)
 {
 	int i;
+	int	p;
 	
 	i = 0;
+	p = 0;
 	if (data->map == NULL)
 		ft_error(data, "Map didn't parsed or file is empty", 0);
 	while (data->map[i] != NULL)
 	{
-		ft_check_strangers_fullness(data, data->map[i], i);
+		p += ft_check_strangers_fullness(data, data->map[i], i);
 		i++;
 	}
+	if (p < 1)
+		ft_error(data, "Where is starting character?", 0);
+	if (p > 1)
+		ft_error(data, "Too many starting characters", 0);
 	ft_check_rectangularity_frame(data, data->map, 0);
 	if (data->map[0][data->width] == '\n')
 		data->map[0][data->width] = '\0';
