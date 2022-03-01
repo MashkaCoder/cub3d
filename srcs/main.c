@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/26 23:29:52 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/01 19:02:39 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ static void	ft_parse_map(t_data *data, int fd)
 		ft_gnl_read(data, &gnl, fd, &ln);
 	while (gnl != 0)
 	{
-		if ((ln[0] != '\n')
-			&& (ft_arr_plus_one(&(data->map), ln, 0, ft_strlen(ln)) == NULL))
+		if (ln[0] != '\n')
 		{
-			free(ln);
-			ft_error(data, "Realy shitty shit", 0);
+			if (ft_arr_plus_one(&(data->map), ln, 0, ft_strlen(ln)) == NULL)
+			{
+				free(ln);
+				ft_error(data, "Realy shitty shit", 0);
+			}
 		}
 		else
 		{
