@@ -39,7 +39,7 @@
 #define screenWidth 640
 #define screenHeight 480
 
-typedef struct s_data
+typedef struct s_data_c
 {
 	void	*mlx;
 	void	*win;
@@ -51,7 +51,7 @@ typedef struct s_data
 	float	planeY;
 	float	time;
 	float	oldTime;
-}				t_data;
+}				t_data_c;
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -81,19 +81,29 @@ int worldMap[mapWidth][mapHeight]=
 	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
 
-int	free_all(t_data *mlx_str)
+int	free_all(t_data_c *mlx_str)
 {
 	exit(EXIT_SUCCESS);
 }
 
-int	key_hook(int keycode, t_data *main)
+int	key_hook(int keycode, t_data_c *main)
 {
 	if (keycode == ESC)
 		free_all(main);
 	return (0);
 }
 
-void	calc(t_data *main)
+void draw_line(int x, int drawStart, int drawEnd, int color, t_data_c *main)
+{
+	while (drawStart < drawEnd)
+	{
+		mlx_pixel_put(main->mlx, main->win, x, drawStart, color);
+		drawStart++;
+	}
+
+}
+
+void	calc(t_data_c *main)
 {
 	int		x;
 	float	cameraX; // cameraX — координата x на плоскости камеры, которую представляет текущая координата x экрана, сделанная таким образом, что правая сторона экрана получает координату 1, центр экрана получает координату 0, а левая сторона экрана получает координату -1. Из этого можно вычислить направление луча, как было объяснено ранее: как сумму вектора направления и части плоского вектора. Это необходимо сделать как для координат x, так и для y вектора (поскольку добавление двух векторов — это добавление их координат x и добавление их координат y).
@@ -110,6 +120,10 @@ void	calc(t_data *main)
 	int		stepY;
 	int		hit; // индиф удара в стену (индик заверш цикла)
 	int		side; // удар в стену x/y x = 0, y = 1
+	int		lineHeight; //высота вертикальной линии, которая должна быть нарисована
+	int		drawStart; // начало отрисовки
+	int		drawEnd; //конец
+	int		color;
 
 
 	x = 0;
@@ -119,19 +133,95 @@ void	calc(t_data *main)
 		cameraX = 2 * x / (float)screenWidth - 1;//координата x в пространстве камеры
 		rayDirX = main->dirX + main->planeX * cameraX;
 		rayDirY = main->dirY + main->planeY * cameraX;
+		mapX = (int)main->posX;
+		mapY = (int)main->posY;
+		hit = 0;
+		deltaDistX = fabs(1 / rayDirX);
+		deltaDistY = fabs(1 / rayDirY);
+		// вычисл нач sideDistX/Y (расст до перв стены)
+		if (rayDirX < 0)
+		{
+			stepX = -1;
+			sideDistX = (main->posX - mapX) * deltaDistX;
+		}
+		else
+		{
+			stepX = 1;
+			sideDistX = (mapX + 1.0 - main->posX) * deltaDistX;
+		}
+		if (rayDirY < 0)
+		{
+			stepY = -1;
+			sideDistY = (main->posY - mapY) * deltaDistY;
+		}
+		else
+		{
+			stepY = 1;
+			sideDistY = (mapY + 1.0 - main->posY) * deltaDistY;
+		}
+		// теперь начинается сам алгом
+		//  Это цикл, каждый раз увеличивающий луч на 1 квадрат, пока не будет достигнута стена.
+		while (hit == 0)
+		{
+			if (sideDistX < sideDistY)
+			{
+				sideDistX += deltaDistX;
+				mapX += stepX;
+				side = 0;
+			}
+			else
+			{
+				sideDistY += deltaDistY;
+				mapY += stepY;
+				side = 1;
+			}
+			//Проверяем, попал ли луч в стену
+			if (worldMap[mapX][mapY] > 0)
+				hit = 1;
+		}
+		//  Рассчитываем расстояние, спроецированное на направление камеры (евклидово расстояние дало бы эффект рыбьего глаза!)
+		if (side == 0)
+			perpWallDist = (sideDistX - deltaDistX);
+		else
+			perpWallDist = (sideDistY - deltaDistY);
+		//Рассчитываем высоту линии для рисования на экране
+		lineHeight = (int)(screenHeight / perpWallDist);
+		drawStart = -lineHeight / 2 + screenHeight / 2;
+		if (drawStart < 0)
+			drawStart = 0;
+		drawEnd = lineHeight / 2 + screenHeight / 2;
+		if (drawEnd >= screenHeight)
+			drawEnd = screenHeight - 1;
+		if (worldMap[mapY][mapX] == 1)
+			color = 0xFF0000;
+		else if (worldMap[mapY][mapX] == 2)
+			color = 0x00FF00;
+		else if (worldMap[mapY][mapX] == 3)
+			color = 0x0000FF;
+		else if (worldMap[mapY][mapX] == 4)
+			color = 0xFFFFFF;
+		else
+			color = 0xFFFF00;
+		// придать сторонам x и y разную яркость
+		if (side == 1)
+			color = color / 2;
+		draw_line(x, drawStart, drawEnd, color, main);
+
+		x++;
 
 	}
 
 }
 
-int	render(void)
+
+int	render(t_data_c *main)
 {
 	calc(main);
 }
 
 int	main(int argc, char **argv)
 {
-	t_data	main;
+	t_data_c	main;
 
 	main.mlx = mlx_init();
 	main.posX = 22;
