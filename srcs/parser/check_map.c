@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/01 21:09:27 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 19:36:55 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,25 @@ static void	ft_to_width(t_data *data, int y, int ln, int tmpln)
 		data->map[y][ln] = '\0';
 	if (ln < data->width)
 	{
-		tmpln = data->width - ln + 1;
+		tmpln = data->width - ln;
 		tmp2 = ft_strdup(data->map[y]);
 		if (tmp2 == NULL)
 			ft_error(data, "ft_to_width malloc", 0);
-		tmp = ft_calloc(tmpln, sizeof(char));
+		tmp = ft_calloc(tmpln + 1, sizeof(char));
 		if (tmp == NULL)
 			ft_error(data, "ft_to_width malloc", 0);
-		tmpln--;
-		tmp = ft_memset(tmp, ' ', tmpln - 1);
+		tmp = ft_memset(tmp, ' ', tmpln);
 		free(data->map[y]);
 		data->map[y] = ft_strjoin(tmp2, tmp);
 		free(tmp);
 		free(tmp2);
 	}
-	else
-		data->width = ln;
 }
 
 static void	ft_check_core(t_data *data, char **m, int y, int x)
 {
 	while (m[y + 1] != NULL)
 	{
-		ft_to_width(data, y, ft_strlen(data->map[y]), 0);
 		if (data->map[y] == NULL)
 		{
 			while(data->map[y + 1] != NULL)
@@ -60,14 +56,13 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 			ft_error(data, "Frame is not full!", 0);
 		while (m[y][x + 1] != '\n' && m[y][x + 1] != '\0')
 		{
-			if ((m[y - 1][x] == ' ' || m[y + 1][x] == ' ' 
-				|| m[y][x - 1] == ' ' || m[y][x + 1] == ' ') && m[y][x] != '1')
-				ft_error(data, "Frame is not full!", 0);
+			if ((m[y - 1][x] == ' ' || m[y + 1][x] == ' ' || m[y][x - 1] == ' '
+				|| m[y][x + 1] == ' ') && m[y][x] != '1' && m[y][x] != ' ')
+				ft_error(data, "Frame is not full!!", 0);
 			x++;
 		}
 		y++;
 	}
-	data->high = y;
 }
 
 static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
@@ -75,29 +70,18 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 	while (map[0][data->width] != '\n' && map[0][data->width] != '\0')
 	{
 		if (map[0][data->width] != '1' && map[0][data->width] != ' ')
-			ft_error(data, "Frame is not full", 0);
+			ft_error(data, "Frame is not full!!!", 0);
 		data->width++;
 	}
 	if (data->map[1] != NULL)
 	{
 		ft_check_core(data, map, 1, 1);
-		ft_to_width(data, data->high, ft_strlen(map[data->high]), 0);
 		while (map[data->high - 1][i] != '\0')
 		{
-			if (map[data->high][i] != '1' && map[data->high - 1][i] != ' ')
-			{
-				ft_putarr_fd(data->map, 1);
-				ft_error(data, "Frame is not full!", 0);
-			}
+			if (map[data->high - 1][i] != '1' && map[data->high - 1][i] != ' ')
+				ft_error(data, "Frame is not full!!!!!", 0);
 			i++;
 		}
-		data->high++;
-	}
-	i = 0;
-	while ((int)ft_strlen(map[i]) < data->width)
-	{
-		ft_to_width(data, i, ft_strlen(map[i]), 0);
-		i++;
 	}
 }
 
@@ -145,6 +129,12 @@ void	ft_check_map(t_data *data)
 		ft_error(data, "Where is starting character?", 0);
 	if (p > 1)
 		ft_error(data, "Too many starting characters", 0);
+	i = 0;
+	while (i < data->high)
+	{
+		ft_to_width(data, i, ft_strlen(data->map[i]), 0);
+		i++;
+	}
 	ft_check_rectangularity_frame(data, data->map, 0);
 	if (data->map[0][data->width] == '\n')
 		data->map[0][data->width] = '\0';

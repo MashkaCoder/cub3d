@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 15:32:44 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 17:40:24 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,5 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 		free(*line);
 		ft_error(data, "Not enough argumetns", 0);
 	}
-	ft_open_args(data, data->mlx);
+	//ft_open_args(data, data->mlx);
 }
