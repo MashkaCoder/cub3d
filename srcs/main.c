@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 18:35:54 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 20:29:08 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,19 @@
 static void	ft_parse_map(t_data *data, int fd)
 {
 	int		gnl;
+	int		l;
 	char	*ln;
 
 	ft_parse_params(data, &gnl, &ln, fd);
 	ft_gnl_read(data, &gnl, fd, &ln);
-	while (gnl != 0 && ln[0] == '\n')
+	while (gnl != 0 && ln[0] == '\0')
 		ft_gnl_read(data, &gnl, fd, &ln);
 	while (gnl != 0)
 	{
-		if ((ln[0] != '\n' || gnl == 0)
-			&& ft_arr_plus_one(&(data->map), ln, 0, ft_strlen(ln)) == NULL)
+		l = ft_strlen(ln);
+		if (l > data->width)
+			data->width = l; 
+		if (ln[0] == '\0' || ft_arr_plus_one(&(data->map), ln, 0, l) == NULL)
 		{
 			free(ln);
 			ft_error(data, "map divided", 0);
@@ -80,6 +83,6 @@ int	main(int argc, char *argv[])
 		ft_error(data, ft_itoa(fd), 1);
 	data->high = ft_arrlen(data->map);
 	ft_check_map(data);
-	ft_cub(data);
+	//ft_cub(data);
 	exit(EXIT_SUCCESS);
 }
