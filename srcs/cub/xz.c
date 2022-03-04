@@ -1,6 +1,8 @@
 # include "../cub.h"
 # include "../../mlx/mlx.h"
 # include <math.h>
+#include <sys/time.h>
+#include <stdio.h>
 
 // FOR CUB
 // typedef struct s_mlx
@@ -41,44 +43,50 @@
 
 typedef struct s_data_c
 {
-	void	*mlx;
-	void	*win;
-	float	posX;
-	float	posY;
-	float	dirX;
-	float	dirY;
-	float	planeX;
-	float	planeY;
-	float	time;
-	float	oldTime;
+	void			*mlx;
+	void			*win;
+	float			posX;
+	float			posY;
+	float			dirX;
+	float			dirY;
+	float			planeX;
+	float			planeY;
+	unsigned long	time;
+	unsigned long	oldTime;
+	float			moveSpeed; //мод скор
+	float			rotSpeed;
 }				t_data_c;
+
+unsigned long	get_time(void);
+void			calc(t_data_c *main);
+int				key_hook(int keycode, t_data_c *main);
 
 int worldMap[mapWidth][mapHeight]=
 {
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}, //0
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //1
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //2
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //3
+	{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1}, //4
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1}, //5
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1}, //6
+	{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1}, //7
+	{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1}, //8
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //9
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //10
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //11
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //12
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //13
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //14
+	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //15
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //16
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //17
+	{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //18
+	{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //19
+	{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //20
+	{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //21
+	{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}, //22
+	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}  //23
 };
 
 int	free_all(t_data_c *mlx_str)
@@ -88,8 +96,40 @@ int	free_all(t_data_c *mlx_str)
 
 int	key_hook(int keycode, t_data_c *main)
 {
+	float oldDir = main->dirX;
+	float oldPlaneX = main->planeX;
 	if (keycode == ESC)
 		free_all(main);
+	else if (keycode == W)
+	{
+		if (!worldMap[(int)(main->posX + main->dirX * main->moveSpeed)][(int)main->posY])
+			main->posX += main->dirX * main->moveSpeed;
+		if (!worldMap[(int)(main->posX)][(int)(main->posY  + main->dirY * main->moveSpeed)])
+			main->posY += main->dirY * main->moveSpeed;
+	}
+	else if (keycode == S)
+	{
+		if (!worldMap[(int)(main->posX - main->dirX * main->moveSpeed)][(int)main->posY])
+			main->posX -= main->dirX * main->moveSpeed;
+		if (!worldMap[(int)(main->posX)][(int)(main->posY - main->dirY * main->moveSpeed)])
+			main->posY -= main->dirY * main->moveSpeed;
+	}
+	else if (keycode == D)
+	{
+		main->dirX = main->dirX * cos(-main->rotSpeed) - main->dirY * sin(-main->rotSpeed);
+		main->dirY = oldDir * sin(-main->rotSpeed) + main->dirY * cos(-main->rotSpeed);
+		main->planeX = main->planeX * cos(-main->rotSpeed) - main->planeY * sin(-main->rotSpeed);
+		main->planeY = oldPlaneX * sin(-main->rotSpeed) + main->planeY * sin(-main->rotSpeed);
+
+	}
+	else if (keycode == A)
+	{
+		main->dirX = main->dirX * cos(main->rotSpeed) - main->dirY * sin(main->rotSpeed);
+		main->dirY = oldDir * sin(main->rotSpeed) + main->dirY * cos(main->rotSpeed);
+		main->planeX = main->planeX * cos(main->rotSpeed) - main->planeY * sin(main->rotSpeed);
+		main->planeY = oldPlaneX * sin(main->rotSpeed) + main->planeY * sin(main->rotSpeed);
+		
+	}
 	return (0);
 }
 
@@ -124,6 +164,7 @@ void	calc(t_data_c *main)
 	int		drawStart; // начало отрисовки
 	int		drawEnd; //конец
 	int		color;
+	float	frameTime; // время, которое занял кадр
 
 
 	x = 0;
@@ -206,18 +247,30 @@ void	calc(t_data_c *main)
 		if (side == 1)
 			color = color / 2;
 		draw_line(x, drawStart, drawEnd, color, main);
-
+		main->oldTime = main->time;
+		main->time = get_time();
+		main->moveSpeed = 0.05; //значение константы в квадратах/секунду
+		main->rotSpeed = 0.05; //значение константы в радианах/секунду
 		x++;
-
 	}
 
 }
 
+unsigned long	get_time(void)
+{
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+}
 
 int	render(t_data_c *main)
 {
 	calc(main);
+	mlx_clear_window(main->mlx, main->win);
+	return (0);
 }
+
 
 int	main(int argc, char **argv)
 {
@@ -230,11 +283,14 @@ int	main(int argc, char **argv)
 	main.dirY = 0;
 	main.planeX = 0;
 	main.planeY = 0.66;
-	main.time = 0;
-	main.oldTime = 0;
+	main.moveSpeed = 0.01;
+	main.rotSpeed = 0.01;
+	main.time = get_time();
+	main.oldTime = get_time();
 	main.win = mlx_new_window(main.mlx, screenWidth, screenHeight, "ny privet");
 	mlx_loop_hook(main.mlx, render, &main);
 	mlx_hook(main.win, 17, 0, free_all, &main);
 	mlx_hook(main.win, 02, 0, key_hook, &main);
 	mlx_loop(main.mlx);
+	return (0);
 }
