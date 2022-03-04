@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/21 17:17:46 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 13:46:21 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 typedef struct s_txtr
 {
+	int		width;
+	int		height;
 	void	*north;
 	void	*south;
 	void	*west;
@@ -30,6 +32,7 @@ typedef struct s_data
 	int		floor[3];
 	int		ceilling[3];
 	int		player_base[2];
+	void	*mlx;
 	t_txtr	*walls;
 }				t_data;
 

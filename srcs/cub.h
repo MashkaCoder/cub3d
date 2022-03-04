@@ -16,7 +16,6 @@
 # include "types.h"
 # include "parser/parser.h"
 
-
 //Функции общего назначения (utils.c)
 void	ft_error(t_data *data, char *msg, int op);
 int		ft_open(char *flnm);
