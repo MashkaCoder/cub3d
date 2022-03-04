@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:44:14 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 13:54:54 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 17:49:56 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	ft_putarr_fd(char **arr, int fd)
 		while (arr[i] != NULL)
 		{
 			ft_putstr_fd(arr[i], fd);
-			ft_putstr_fd(" ! ", fd);
+			ft_putchar_fd('!', fd);
+			ft_putchar_fd('\n', fd);
 			i++;
 		}
 		if (arr[i] == NULL)
