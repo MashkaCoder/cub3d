@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/01 21:10:19 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 14:31:54 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,7 @@ int	main(int argc, char *argv[])
 		ft_error(data, "ft_calloc for map", 0);
 	ft_parse_map(data, fd);
 	if (close(fd) == -1)
-	{
-		ft_free_data(data);
 		ft_error(data, ft_itoa(fd), 1);
-	}
 	ft_check_map(data);
 	ft_cub(data);
 	exit(EXIT_SUCCESS);
