@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/02/26 22:34:10 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 15:31:50 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,13 @@ void	ft_free_data(t_data *data)
 		while (i < 4)
 		{
 			if (data->nswe[i] != NULL)
-				free(data->nswe);
+				free(data->nswe[i]);
 			i++;
 		}
 		ft_bzero(data->nswe, sizeof(char *) * 4);
+		/*if (data->mlx != 0)
+			 действия в этом случае*/
+		if (data->walls)
 		ft_bzero(data, sizeof(t_data));
 		free(data);
 	}

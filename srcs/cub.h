@@ -6,7 +6,7 @@
 # define S 1
 # define A 0
 # define D 2
-//# include <mlx.h>
+# include <mlx.h>
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
@@ -25,6 +25,8 @@ void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln);
 char	**ft_arr_plus_one(char ***sub_arr, char *str, int i, int ln);
 void	ft_putarr_fd(char **arr, int fd);
 int		ft_arrlen(char **arr);
+char	**ft_arrdup(char **arr);
+char	**ft_arrjoin(char **arr1, char **arr2);
 
 //Очистка памяти (free.c)
 void	ft_free_data(t_data *data);

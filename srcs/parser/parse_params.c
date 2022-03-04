@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/01 20:05:43 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/04 15:32:44 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	ft_check_write_params(t_data *data, char **line, int *check)
 	char	**tmp;
 	int		sln;
 
-	if ((*line)[0] == '\n')
+	if (line == NULL || (*line)[0] == '\n' || (*line)[0] == '\0')
 		return ;
 	tmp = ft_split(*line, ' ');
 	if (tmp == NULL)
@@ -122,13 +122,18 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 	check = 0;
 	data->floor[0] = -1;
 	data->ceilling[0] = -1;
-	while (gnl != 0 && check != 6)
+	ft_gnl_read(data, gnl, fd, line);
+	ft_check_write_params(data, line, &check);
+	while (*gnl != 0 && check != 6)
 	{
 		ft_gnl_read(data, gnl, fd, line);
 		ft_check_write_params(data, line, &check);
 		i++;
 	}
 	if (check != 6)
+	{
+		free(*line);
 		ft_error(data, "Not enough argumetns", 0);
-	//ft_open_args(data);
+	}
+	ft_open_args(data, data->mlx);
 }
