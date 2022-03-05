@@ -60,6 +60,7 @@ typedef struct s_data_c
 unsigned long	get_time(void);
 void			calc(t_data_c *main);
 int				key_hook(int keycode, t_data_c *main);
+void			draw_line(int x, int drawStart, int drawEnd, int color, t_data_c *main);
 
 int worldMap[mapWidth][mapHeight]=
 {
@@ -116,31 +117,34 @@ int	key_hook(int keycode, t_data_c *main)
 	}
 	else if (keycode == D)
 	{
+		// float oldDir = main->dirX;
+		// float oldPlaneX = main->planeX;
 		main->dirX = main->dirX * cos(-main->rotSpeed) - main->dirY * sin(-main->rotSpeed);
 		main->dirY = oldDir * sin(-main->rotSpeed) + main->dirY * cos(-main->rotSpeed);
+		// float oldPlaneX = main->planeX;
 		main->planeX = main->planeX * cos(-main->rotSpeed) - main->planeY * sin(-main->rotSpeed);
-		main->planeY = oldPlaneX * sin(-main->rotSpeed) + main->planeY * sin(-main->rotSpeed);
+		main->planeY = oldPlaneX * sin(-main->rotSpeed) + main->planeY * cos(-main->rotSpeed);
 
 	}
 	else if (keycode == A)
 	{
+		// float oldDir = main->dirX;
 		main->dirX = main->dirX * cos(main->rotSpeed) - main->dirY * sin(main->rotSpeed);
 		main->dirY = oldDir * sin(main->rotSpeed) + main->dirY * cos(main->rotSpeed);
+		// float oldPlaneX = main->planeX;
 		main->planeX = main->planeX * cos(main->rotSpeed) - main->planeY * sin(main->rotSpeed);
-		main->planeY = oldPlaneX * sin(main->rotSpeed) + main->planeY * sin(main->rotSpeed);
-		
+		main->planeY = oldPlaneX * sin(main->rotSpeed) + main->planeY * cos(main->rotSpeed);
 	}
 	return (0);
 }
 
 void draw_line(int x, int drawStart, int drawEnd, int color, t_data_c *main)
 {
-	while (drawStart < drawEnd)
+	while (drawStart <= drawEnd)
 	{
 		mlx_pixel_put(main->mlx, main->win, x, drawStart, color);
 		drawStart++;
 	}
-
 }
 
 void	calc(t_data_c *main)
@@ -222,9 +226,11 @@ void	calc(t_data_c *main)
 		}
 		//  Рассчитываем расстояние, спроецированное на направление камеры (евклидово расстояние дало бы эффект рыбьего глаза!)
 		if (side == 0)
-			perpWallDist = (sideDistX - deltaDistX);
+			// perpWallDist = (sideDistX - deltaDistX);
+			perpWallDist = (mapX - main->posX + (1 - stepX) / 2) / rayDirX;
 		else
-			perpWallDist = (sideDistY - deltaDistY);
+			// perpWallDist = (sideDistY - deltaDistY);
+			perpWallDist = (mapY - main->posY + (1 - stepY) / 2) / rayDirY;
 		//Рассчитываем высоту линии для рисования на экране
 		lineHeight = (int)(screenHeight / perpWallDist);
 		drawStart = -lineHeight / 2 + screenHeight / 2;
@@ -247,10 +253,6 @@ void	calc(t_data_c *main)
 		if (side == 1)
 			color = color / 2;
 		draw_line(x, drawStart, drawEnd, color, main);
-		main->oldTime = main->time;
-		main->time = get_time();
-		main->moveSpeed = 0.05; //значение константы в квадратах/секунду
-		main->rotSpeed = 0.05; //значение константы в радианах/секунду
 		x++;
 	}
 
@@ -277,20 +279,23 @@ int	main(int argc, char **argv)
 	t_data_c	main;
 
 	main.mlx = mlx_init();
-	main.posX = 22;
-	main.posY = 12;
+	main.posX = 12;
+	main.posY = 5;
 	main.dirX = -1;
 	main.dirY = 0;
 	main.planeX = 0;
 	main.planeY = 0.66;
-	main.moveSpeed = 0.01;
-	main.rotSpeed = 0.01;
-	main.time = get_time();
-	main.oldTime = get_time();
+	main.moveSpeed = 0.05; //значение константы в квадратах/секунду
+	main.rotSpeed = 0.05; //значение константы в радианах/секунду
+	// main.moveSpeed = 0.01;
+	// main.rotSpeed = 0.01;
+	// main.time = get_time();
+	// main.oldTime = get_time();
 	main.win = mlx_new_window(main.mlx, screenWidth, screenHeight, "ny privet");
-	mlx_loop_hook(main.mlx, render, &main);
+	mlx_loop_hook(main.mlx, &render, &main);
+	mlx_hook(main.win, 02, 0, &key_hook, &main);
 	mlx_hook(main.win, 17, 0, free_all, &main);
-	mlx_hook(main.win, 02, 0, key_hook, &main);
 	mlx_loop(main.mlx);
 	return (0);
 }
+
