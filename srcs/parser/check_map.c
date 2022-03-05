@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 19:36:55 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 16:28:22 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	ft_to_width(t_data *data, int y, int ln, int tmpln)
 {
-	char *tmp;
-	char *tmp2;
+	char	*tmp;
+	char	*tmp2;
 
 	if (data->map[y][ln - 1] == '\n')
 		ln--;
@@ -44,14 +44,14 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 	{
 		if (data->map[y] == NULL)
 		{
-			while(data->map[y + 1] != NULL)
+			while (data->map[y + 1] != NULL)
 			{
 				free(data->map[y + 1]);
 				y++;
 			}
 			ft_error(data, "malloc error ft_check_core", 0);
 		}
-		if ((m[y][0] != '1' && m[y][0] != ' ') 
+		if ((m[y][0] != '1' && m[y][0] != ' ')
 			|| (m[y][data->width - 1] != '1' && m[y][data->width - 1] != ' '))
 			ft_error(data, "Frame is not full!", 0);
 		while (m[y][x + 1] != '\n' && m[y][x + 1] != '\0')
@@ -87,14 +87,14 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 
 static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 {
-	int i;
-	int p;
+	int	i;
+	int	p;
 
 	i = 0;
 	p = 0;
 	while (m[i] != '\0')
 	{
-		if (m[i] != '0' && m[i] != '1' && m[i] != 'N' && m[i] != 'S' 
+		if (m[i] != '0' && m[i] != '1' && m[i] != 'N' && m[i] != 'S'
 			&& m[i] != 'E' && m[i] != '\n' && m[i] != 'W' && m[i] != ' ')
 		{
 			m[i + 1] = '\0';
@@ -113,9 +113,9 @@ static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 
 void	ft_check_map(t_data *data)
 {
-	int i;
+	int	i;
 	int	p;
-	
+
 	i = 0;
 	p = 0;
 	if (data->map == NULL)

@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 21:09:51 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 14:36:47 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 16:41:29 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,39 @@ static void	ft_arrtostr(t_data *data, int aln, char ***tmp, char **second)
 	}
 }
 
+static void	ft_fill_tmp_rgb(t_data *data, char ***tmp, char **frst, char **sec)
+{
+	(*tmp)[0] = ft_strdup(*frst);
+	free(*frst);
+	if ((*tmp)[0] == NULL)
+		ft_context_free_err(data, tmp, 2, "ft_conc_tmp malloc");
+	(*tmp)[1] = ft_strdup(*sec);
+	free(*sec);
+	if ((*tmp)[1] == NULL)
+		ft_context_free_err(data, tmp, 2, "ft_conc_tmp malloc");
+}
+
 static void	ft_conc_tmp(t_data *data, char ***tmp, int aln)
 {
 	char	*first;
 	char	*second;
 
-	if (aln > 2)
+	ft_arrtostr(data, aln, tmp, &second);
+	first = ft_strdup((*tmp)[0]);
+	ft_free_arr(*tmp, aln);
+	if (first == NULL)
 	{
-		ft_arrtostr(data, aln, tmp, &second);
-		first = ft_strdup((*tmp)[0]);
-		ft_free_arr(*tmp, aln);
-		free(tmp);
-		if (first == NULL)
-		{
-			free(second);
-			ft_context_free_err(data, tmp, aln, "ft_conc_tmp malloc");
-		}
-		*tmp = ft_calloc(3, sizeof(char *));
-		if (*tmp == NULL)
-		{
-			free(first);
-			free(second);
-			ft_context_free_err(data, tmp, aln, "ft_conc_tmp malloc");
-		}
-		(*tmp)[0] = ft_strdup(first);
-		free(first);
-		if ((*tmp)[0] == NULL)
-			ft_context_free_err(data, tmp, aln, "ft_conc_tmp malloc");
-		(*tmp)[1] = ft_strdup(second);
 		free(second);
-		if ((*tmp)[1] == NULL)
-			ft_context_free_err(data, tmp, aln, "ft_conc_tmp malloc");
+		ft_context_free_err(data, tmp, aln, "ft_conc_tmp malloc");
 	}
+	*tmp = ft_calloc(3, sizeof(char *));
+	if (*tmp == NULL)
+	{
+		free(first);
+		free(second);
+		ft_context_free_err(data, tmp, 0, "ft_conc_tmp malloc");
+	}
+	ft_fill_tmp_rgb(data, tmp, &first, &second);
 }
 
 void	ft_parse_rgb(t_data *data, char ***tmp, int (*op)[3], int i)
@@ -76,7 +77,8 @@ void	ft_parse_rgb(t_data *data, char ***tmp, int (*op)[3], int i)
 	int		aln;
 
 	aln = ft_arrlen(*tmp);
-	ft_conc_tmp(data, tmp, aln);
+	if (aln > 2)
+		ft_conc_tmp(data, tmp, aln);
 	rgb = ft_split((*tmp)[1], ',');
 	if (rgb == NULL || ft_arrlen(rgb) != 3)
 	{

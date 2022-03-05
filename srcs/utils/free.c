@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 14:25:31 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 17:04:36 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,15 @@ void	ft_free_data(t_data *data)
 			i++;
 		}
 		ft_bzero(data->nswe, sizeof(char *) * 4);
+		if (data->gnln != NULL)
+		{
+			if (*data->gnln != NULL)
+				free(*data->gnln);
+			free(data->gnln);
+		}
 		/*if (data->mlx != 0)
 			 действия в этом случае*/
-		if (data->walls)
+		//if (data->walls != NULL)
 		ft_bzero(data, sizeof(t_data));
 		free(data);
 	}
