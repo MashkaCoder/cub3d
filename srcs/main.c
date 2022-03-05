@@ -6,11 +6,11 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 20:29:08 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 13:42:52 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+#include "cub.h"
 
 static void	ft_parse_map(t_data *data, int fd)
 {
@@ -18,6 +18,7 @@ static void	ft_parse_map(t_data *data, int fd)
 	int		l;
 	char	*ln;
 
+	ln = ft_calloc(1, 1);
 	ft_parse_params(data, &gnl, &ln, fd);
 	ft_gnl_read(data, &gnl, fd, &ln);
 	while (gnl != 0 && ln[0] == '\0')
@@ -83,6 +84,9 @@ int	main(int argc, char *argv[])
 		ft_error(data, ft_itoa(fd), 1);
 	data->high = ft_arrlen(data->map);
 	ft_check_map(data);
+	ft_putarr_fd(data->map, 1);
 	//ft_cub(data);
+	ft_free_data(data);
+	system("leaks a.out");
 	exit(EXIT_SUCCESS);
 }

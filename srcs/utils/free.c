@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 15:31:50 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 14:25:31 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	ft_free_data(t_data *data)
 		ft_bzero(data, sizeof(t_data));
 		free(data);
 	}
+}
+
+void	ft_context_free_err(t_data *data, char ***tmp, int aln, char *msg)
+{
+	ft_free_arr(*tmp, aln);
+	free(tmp);
+	ft_error(data, msg, 0);
 }

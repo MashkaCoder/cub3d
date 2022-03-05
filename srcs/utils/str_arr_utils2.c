@@ -6,11 +6,13 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:55:12 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 13:55:28 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 13:45:20 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
+
+
 
 static char	**ft_strtoarr(char *str)
 {

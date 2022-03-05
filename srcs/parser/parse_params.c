@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 21:59:13 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 14:28:51 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,23 @@ static void	ft_check_write_params(t_data *data, char **line, int *check)
 {
 	char	***tmp;
 	int		sln;
+	int		aln;
 
-	if (line == NULL || (*line)[0] == '\n' || (*line)[0] == '\0')
-		return ;
 	tmp = malloc(sizeof(char **));
+	if (tmp == NULL)
+		ft_error(data, "ft_check_write_params malloc", 1);
 	*tmp = ft_split(*line, ' ');
+	free(*line);
 	if (*tmp == NULL)
 	{
-		free(*line);
+		free(tmp);
 		ft_error(data, "ft_split error", 0);
 	}
+	aln = ft_arrlen(*tmp);
 	sln = ft_strlen((*tmp)[0]);
-	if (ft_arrlen(*tmp) < 2 || sln > 2 || sln < 1
+	if (aln < 2 || sln > 2 || sln < 1
 		|| ft_data_write(data, tmp, sln))
-	{
-		ft_free_arr(*tmp, 2);
-		ft_error(data, "Wrong map parameters", 0);
-	}
+		ft_context_free_err(data, tmp, aln, "Wrong map parameters");
 	ft_free_arr(*tmp, 2);
 	free(tmp);
 	(*check)++;
@@ -93,7 +93,9 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 	data->floor[0] = -1;
 	data->ceilling[0] = -1;
 	ft_gnl_read(data, gnl, fd, line);
-	ft_check_write_params(data, line, &check);
+	if (line != NULL && (*line)[0] != '\n' && (*line)[0] == '\0')
+		ft_check_write_params(data, line, &check);
+	*line = ft_calloc(1, 1);
 	while (*gnl != 0 && check != 6)
 	{
 		ft_gnl_read(data, gnl, fd, line);
@@ -105,5 +107,4 @@ void	ft_parse_params(t_data *data, int *gnl, char **line, int fd)
 		free(*line);
 		ft_error(data, "Not enough argumetns", 0);
 	}
-	//ft_open_args(data, data->mlx);
 }

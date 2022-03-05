@@ -29,6 +29,7 @@ char	**ft_arrdup(char **arr);
 char	**ft_arrjoin(char **arr1, char **arr2);
 
 //Очистка памяти (free.c)
+void	ft_context_free_err(t_data *data, char ***tmp, int aln, char *msg);
 void	ft_free_data(t_data *data);
 char	**ft_free_arr(char **arr, int ln);
 

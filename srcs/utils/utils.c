@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:09:19 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 16:38:27 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/05 13:42:25 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_open(char *flnm)
 
 void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln)
 {
+	free(*ln);
 	*gnl = ft_get_next_line(fd, ln);
 	if (*gnl == -1)
 	{
