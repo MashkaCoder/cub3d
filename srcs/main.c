@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 17:06:25 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 23:40:43 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ static void	ft_check_format(char *name)
 
 int	main(int argc, char *argv[])
 {
-	t_data	*data;
-	int		fd;
+	t_data		*data;
+	t_raycast	raycast;
+	int			fd;
 
 	if (argc < 2)
 		ft_error(NULL, "Too few arguments", 0);
@@ -81,6 +82,13 @@ int	main(int argc, char *argv[])
 	data->high = ft_arrlen(data->map);
 	ft_check_map(data);
 	//ft_cub(data);
+	// i'm sorry, but
+	raycast.mlx = mlx_init();
+	init_st_rc(data, &raycast);
+	raycast.win = mlx_new_window(raycast.mlx, screenWidth, screenHeight, "privetyli");
+	mlx_hook(raycast.win, 2, 0, keyhook, &raycast);
+	mlx_hook(raycast.win, 17, 0, free_all, &raycast);
+	mlx_loop(raycast.mlx);
 	ft_free_data(data);
 	exit(EXIT_SUCCESS);
 }
