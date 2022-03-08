@@ -140,11 +140,25 @@ int	key_hook(int keycode, t_data_c *main)
 
 void draw_line(int x, int drawStart, int drawEnd, int color, t_data_c *main)
 {
+	int	c;
+
+	c = 0;
+	while (c < drawStart)
+	{
+		mlx_pixel_put(main->mlx, main->win, x, c, 0xFFCBDB);
+		c++;
+	}
 	while (drawStart <= drawEnd)
 	{
 		mlx_pixel_put(main->mlx, main->win, x, drawStart, color);
 		drawStart++;
 	}
+	while (drawEnd < screenHeight)
+	{
+		mlx_pixel_put(main->mlx, main->win, x, drawEnd, 0x80A6FF);
+		drawEnd++;
+	}
+
 }
 
 void	calc(t_data_c *main)
@@ -171,46 +185,44 @@ void	calc(t_data_c *main)
 	float	frameTime; // время, которое занял кадр
 	// пол
 
-	float	posZ; // вертик положение камеры
-	int		p; //тек поз у относ центра экрана (горизонта)
-	float	rowDistance; // гор рассста от камеры до пола для тек строки
-	int y;
-	y = 0;
-	while (y < screenHeight)
-	{
-		// rayDir для крайнего левого (x = 0) и крайнего правого (x = w)
-		float	rayDirX0 = main->dirX - main->planeX;
-		float	rayDirY0 = main->dirY - main->planeY;
-		float	rayDirX1 = main->dirX + main->planeX;
-		float	rayDirY1 = main->dirY + main->planeY; // Текущая позиция y относительно центра экрана (горизонта)
-		p = y - screenHeight / 2;
-		posZ = screenHeight * 0.5;
-		rowDistance = posZ/p;
-		// вычислить реальный вектор шага, который мы должны добавить для каждого x (параллельно плоскости камеры)
-		// сложение шаг за шагом позволяет избежать умножения с весом во внутреннем цикле
-		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
-		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenHeight; // реальные координаты крайнего левого столбца. Это будет обновляться по мере того, как мы шагаем вправо.
-		float floorX = main->posX + rowDistance * rayDirX0;
-		float floorY = main->posY + rowDistance * rayDirY0;
-		x = 0;
-		while (x < screenWidth)
-		{
-			// 0xFF0000
-			color = 0x30ba8f;
-			int cellX = (int)floorX;
-			int cellY = (int)floorY; // коорд ячейки
-			floorX += floorStepX;
-			floorY += floorStepY;
-			// draw_line(x, y, y, color, main);
-			x++;
+	// float	posZ; // вертик положение камеры
+	// int		p; //тек поз у относ центра экрана (горизонта)
+	// float	rowDistance; // гор рассста от камеры до пола для тек строки
+	// int y;
+	// y = 0;
+	// while (y < screenHeight)
+	// {
+	// 	// rayDir для крайнего левого (x = 0) и крайнего правого (x = w)
+	// 	float	rayDirX0 = main->dirX - main->planeX;
+	// 	float	rayDirY0 = main->dirY - main->planeY;
+	// 	float	rayDirX1 = main->dirX + main->planeX;
+	// 	float	rayDirY1 = main->dirY + main->planeY; // Текущая позиция y относительно центра экрана (горизонта)
+	// 	p = y - screenHeight / 2;
+	// 	posZ = screenHeight * 0.5;
+	// 	rowDistance = posZ/p;
+	// 	// вычислить реальный вектор шага, который мы должны добавить для каждого x (параллельно плоскости камеры)
+	// 	// сложение шаг за шагом позволяет избежать умножения с весом во внутреннем цикле
+	// 	float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / screenWidth;
+	// 	float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / screenHeight; // реальные координаты крайнего левого столбца. Это будет обновляться по мере того, как мы шагаем вправо.
+	// 	float floorX = main->posX + rowDistance * rayDirX0;
+	// 	float floorY = main->posY + rowDistance * rayDirY0;
+	// 	x = 0;
+	// 	while (x < screenWidth)
+	// 	{
+	// 		// 0xFF0000
+	// 		color = 0x30ba8f;
+	// 		int cellX = (int)floorX;
+	// 		int cellY = (int)floorY; // коорд ячейки
+	// 		floorX += floorStepX;
+	// 		floorY += floorStepY;
+	// 		// draw_line(x, y, y, color, main);
+	// 		x++;
 
 
-		}
-		y++;
+	// 	}
+	// 	y++;
 
-	}
-
-
+	// }
 	// стены
 	x = 0;
 	while (x < screenWidth)
