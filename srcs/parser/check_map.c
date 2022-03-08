@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/08 19:20:58 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:23:09 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 		{
 			p++;
 			data->playdir = m[i];
-			write(1, &data->playdir, 1);
 			data->player_base[0] = i;
 			data->player_base[1] = j;
 		}
