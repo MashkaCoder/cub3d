@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/18 17:02:35 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 16:41:58 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:30:59 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 //Парсинг карты
 void	ft_parse_params(t_data *data, int *gnl, int fd);
-void	ft_parse_rgb(t_data *data, char ***tmp, int (*op)[3], int i);
+void	ft_parse_rgb(t_data *data, char ***tmp, int *op, int i);
 void	ft_open_args(t_data *data, void *mlx);
 void	ft_destroy_images(t_data *data);
 void	ft_check_map(t_data *data);

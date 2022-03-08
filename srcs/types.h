@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/08 19:19:15 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:31:21 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ typedef struct s_data
 	int		high;
 	char	**map;
 	char	*nswe[4];
-	int		floor[3];
-	int		ceilling[3];
+	int		floor;
+	int		ceilling;
 	int		player_base[2];
 	char	playdir;
 	char	**gnln;

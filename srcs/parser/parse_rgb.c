@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 21:09:51 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 16:41:29 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:39:29 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ static void	ft_conc_tmp(t_data *data, char ***tmp, int aln)
 	ft_fill_tmp_rgb(data, tmp, &first, &second);
 }
 
-void	ft_parse_rgb(t_data *data, char ***tmp, int (*op)[3], int i)
+void	ft_parse_rgb(t_data *data, char ***tmp, int *op, int i)
 {
 	char	**rgb;
-	int		num;
+	int		num[3];
 	int		aln;
 
 	aln = ft_arrlen(*tmp);
@@ -87,14 +87,14 @@ void	ft_parse_rgb(t_data *data, char ***tmp, int (*op)[3], int i)
 	}
 	while (i < 3)
 	{
-		num = ft_atoi(rgb[i]);
-		if (num > 255 || num < 0)
+		num[i] = ft_atoi(rgb[i]);
+		if (num[i] > 255 || num[i] < 0)
 		{
 			ft_free_arr(rgb, 3);
 			ft_context_free_err(data, tmp, aln, "RGB must be in 0-255");
 		}
-		(*op)[i] = num;
 		i++;
 	}
+	*op = (0 << 24 | num[0] << 16 | num[1] << 8 | num[2]);
 	ft_free_arr(rgb, 3);
 }
