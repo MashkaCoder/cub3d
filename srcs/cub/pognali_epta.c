@@ -2,8 +2,8 @@
 #include <string.h>
 void	init_st_rc(t_data *main, t_raycast *raycast)
 {
-	raycast->posX = (float)main->player_base[0];
-	raycast->posY = (float)main->player_base[1];
+	raycast->posX = (float)main->player_base[0] + 0.5;
+	raycast->posY = (float)main->player_base[1] + 0.5;
 	raycast->cameraX = 0.0;
 	raycast->moveSpeed = 0.1;
 	raycast->rotSpeed = 0.1;
