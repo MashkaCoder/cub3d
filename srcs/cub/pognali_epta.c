@@ -1,9 +1,10 @@
 #include "../cub.h"
-
+#include <string.h>
 void	init_st_rc(t_data *main, t_raycast *raycast)
 {
 	raycast->posX = (float)main->player_base[0];
 	raycast->posY = (float)main->player_base[1];
+	raycast->cameraX = 0.0;
 	raycast->moveSpeed = 0.1;
 	raycast->rotSpeed = 0.1;
 	if (main->playdir == 'N')
@@ -29,6 +30,7 @@ void	init_st_rc(t_data *main, t_raycast *raycast)
 	raycast->planeX = raycast->dirY * 0.66;
 	raycast->planeY = -raycast->dirX * 0.66;
 	ft_open_args(main, raycast);
+	printf("init %p\n", raycast);
 }
 
 int	free_all(void)
@@ -67,6 +69,28 @@ void	calc_step_and_sideDist(t_raycast *raycast)
 	}
 }
 
+void draw_line(int x, int drawStart, int drawEnd, int color, t_raycast *raycast)
+{
+	int	c;
+
+	c = 0;
+	// while (c < drawStart)
+	// {
+	// 	mlx_pixel_put(raycast->mlx, raycast->win, x, c, 0xFFCBDB);
+	// 	c++;
+	// }
+	while (drawStart <= drawEnd)
+	{
+		mlx_pixel_put(raycast->mlx, raycast->win, x, drawStart, color);
+		drawStart++;
+	}
+	// while (drawEnd < screenHeight)
+	// {
+	// 	mlx_pixel_put(raycast->mlx, raycast->win, x, drawEnd, 0x80A6FF);
+	// 	drawEnd++;
+	// }
+}
+
 void	calc(t_raycast *raycast, t_data *main)
 {
 	int	x;
@@ -77,9 +101,12 @@ void	calc(t_raycast *raycast, t_data *main)
 	int	drawEnd;
 
 	x = 0;
+	printf("camera x: %f\n", raycast->cameraX);
+	printf("calc: %p\n", raycast);
 	while (x < screenWidth)
 	{
 		hit = 0;
+		printf("%f %d %f\n", raycast->cameraX, x, (float)screenWidth);
 		raycast->cameraX = 2 * x / (float)screenWidth - 1;
 		raycast->rayDirX = raycast->dirX + raycast->planeX * raycast->cameraX;
 		raycast->rayDirY = raycast->dirY + raycast->planeY * raycast->cameraX;
@@ -90,6 +117,8 @@ void	calc(t_raycast *raycast, t_data *main)
 		calc_step_and_sideDist(raycast);
 		while (!hit)
 		{
+
+			printf("jopa\n");
 			if (raycast->sideDistX < raycast->sideDistY)
 			{
 				raycast->sideDistX += raycast->deltaDistX;
@@ -98,12 +127,16 @@ void	calc(t_raycast *raycast, t_data *main)
 			}
 			else
 			{
-				raycast->sideDistX += raycast->deltaDistX;
-				raycast->mapX += raycast->stepX;
-				side = 0;
+				raycast->sideDistY += raycast->deltaDistY;
+				raycast->mapY += raycast->stepY;
+				side = 1;
 			}
-			if (main->map[raycast->mapX][raycast->mapY] == 1)
+			printf("X: %d\n Y:%d\n", raycast->mapX, raycast->mapY);
+			if (main->map[raycast->mapY][raycast->mapX] == '1') ///////////x y
+			{
+				printf("xiy\n");
 				hit = 1;
+			}
 		}
 		if (side == 0)
 			raycast->perpWallDist = raycast->sideDistX - raycast->deltaDistX;
@@ -116,8 +149,16 @@ void	calc(t_raycast *raycast, t_data *main)
 		drawEnd = lineHeight / 2 + screenHeight / 2;
 		if (drawEnd >= screenHeight)
 			drawEnd = screenHeight - 1;
-
-
+		int	color;
+		if (!side && raycast->mapX < main->player_base[0]) // w
+			color = 0x549FB8;
+		if (!side && raycast->mapX >= main->player_base[0]) // e
+			color = 0xB22222;
+		if (side && raycast->mapY < main->player_base[1]) // n
+			color = 0x228B22;
+		if (side && raycast->mapY >= main->player_base[1]) // s
+			color = 0x40E0D0;
+		draw_line(x, drawStart, drawEnd, color, raycast);
 		x++;
 	}
 

@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/09 19:59:56 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/09 21:44:39 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,15 @@ int	main(int argc, char *argv[])
 	ft_check_map(data);
 	//ft_cub(data);
 	// i'm sorry, but
+	data->raycast = &raycast;
 	raycast.mlx = mlx_init();
 	init_st_rc(data, &raycast);
+	printf("main: %p\n", &raycast);
+	printf("main: %p\n", data);
 	raycast.win = mlx_new_window(raycast.mlx, screenWidth, screenHeight, "privetyli");
 	mlx_hook(raycast.win, 2, 0, keyhook, &raycast);
 	mlx_hook(raycast.win, 17, 0, free_all, &raycast);
-	mlx_loop_hook(raycast.mlx, render, &raycast);
+	mlx_loop_hook(raycast.mlx, render, data);
 	mlx_loop(raycast.mlx);
 	ft_free_data(data);
 	exit(EXIT_SUCCESS);
