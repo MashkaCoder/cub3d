@@ -1,4 +1,4 @@
-# include "../cub.h"
+// # include "../cub.h"
 # include "../../mlx/mlx.h"
 # include <math.h>
 #include <sys/time.h>

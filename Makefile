@@ -29,6 +29,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
+# gcc -l mlx -framework OpenGL -framework AppKit cub/pognali_epta.c gnl/*.c parser/*.c libft/libft.a utils/*.c main.c
 # CFLAGS = -g
 
 MLX_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit

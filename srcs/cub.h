@@ -6,6 +6,8 @@
 # define D 2
 # define W 13
 # define ESC 53
+# define AR_LEFT 123
+# define AR_RIGHT 124
 # define screenWidth 640
 # define screenHeight 480
 # include <mlx.h>

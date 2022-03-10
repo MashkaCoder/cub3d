@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/09 20:04:11 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/10 17:22:35 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_raycast
 	int				stepY; //в каком направлении делать шаг по оси y (либо +1, либо -1)
 	int				mapX; // в какой мы клеточке
 	int				mapY; // в какой мы клеточке
-	// struct s_data	*main;
+	struct s_data	*main;
 }			t_raycast;
 
 typedef struct s_txtr
