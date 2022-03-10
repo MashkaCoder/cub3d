@@ -117,21 +117,16 @@ int	key_hook(int keycode, t_data_c *main)
 	}
 	else if (keycode == D)
 	{
-		// float oldDir = main->dirX;
-		// float oldPlaneX = main->planeX;
 		main->dirX = main->dirX * cos(-main->rotSpeed) - main->dirY * sin(-main->rotSpeed);
 		main->dirY = oldDir * sin(-main->rotSpeed) + main->dirY * cos(-main->rotSpeed);
-		// float oldPlaneX = main->planeX;
 		main->planeX = main->planeX * cos(-main->rotSpeed) - main->planeY * sin(-main->rotSpeed);
 		main->planeY = oldPlaneX * sin(-main->rotSpeed) + main->planeY * cos(-main->rotSpeed);
 
 	}
 	else if (keycode == A)
 	{
-		// float oldDir = main->dirX;
 		main->dirX = main->dirX * cos(main->rotSpeed) - main->dirY * sin(main->rotSpeed);
 		main->dirY = oldDir * sin(main->rotSpeed) + main->dirY * cos(main->rotSpeed);
-		// float oldPlaneX = main->planeX;
 		main->planeX = main->planeX * cos(main->rotSpeed) - main->planeY * sin(main->rotSpeed);
 		main->planeY = oldPlaneX * sin(main->rotSpeed) + main->planeY * cos(main->rotSpeed);
 	}
