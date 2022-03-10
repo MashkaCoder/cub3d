@@ -1,11 +1,15 @@
 #ifndef CUB_H
 # define CUB_H
 
-# define ESC 53
-# define W 13
 # define S 1
 # define A 0
 # define D 2
+# define W 13
+# define ESC 53
+# define AR_LEFT 123
+# define AR_RIGHT 124
+# define screenWidth 640
+# define screenHeight 480
 # include <mlx.h>
 # include <stdio.h>
 # include <fcntl.h>
@@ -15,6 +19,7 @@
 # include "gnl/get_next_line.h"
 # include "types.h"
 # include "parser/parser.h"
+# include "cub/cub_cast.h"
 
 //Функции общего назначения (utils.c)
 void	ft_error(t_data *data, char *msg, int op);
@@ -32,5 +37,8 @@ char	**ft_arrjoin(char **arr1, char **arr2);
 void	ft_context_free_err(t_data *data, char ***tmp, int aln, char *msg);
 void	ft_free_data(t_data *data);
 char	**ft_free_arr(char **arr, int ln);
+
+// cub
+int		dolznoBitVmain(t_data *main, t_raycast *raycast);
 
 #endif

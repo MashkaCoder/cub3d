@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:11:41 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 16:28:22 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:23:09 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 		if (m[i] == 'S' || m[i] == 'N' || m[i] == 'W' || m[i] == 'E')
 		{
 			p++;
+			data->playdir = m[i];
 			data->player_base[0] = i;
 			data->player_base[1] = j;
 		}

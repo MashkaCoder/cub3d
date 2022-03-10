@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 17:29:53 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 17:02:24 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/08 19:31:49 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static int	ft_data_write(t_data *data, char ***tmp, int strln)
 {
 	if (strln == 2)
 		return (ft_parse_texture(data, *tmp));
-	if ((*tmp)[0][0] == 'F' && data->floor[0] == -1)
+	if ((*tmp)[0][0] == 'F' && data->floor == -1)
 		ft_parse_rgb(data, tmp, &(data->floor), 0);
-	else if ((*tmp)[0][0] == 'C' && data->ceilling[0] == -1)
+	else if ((*tmp)[0][0] == 'C' && data->ceilling == -1)
 		ft_parse_rgb(data, tmp, &(data->ceilling), 0);
 	else
 		return (1);
@@ -82,8 +82,8 @@ void	ft_parse_params(t_data *data, int *gnl, int fd)
 		ft_error(data, "ft_parse_params malloc", 0);
 	i = 0;
 	check = 0;
-	data->floor[0] = -1;
-	data->ceilling[0] = -1;
+	data->floor = -1;
+	data->ceilling = -1;
 	while (*gnl != 0 && check != 6)
 	{
 		ft_gnl_read(data, gnl, fd, data->gnln);
