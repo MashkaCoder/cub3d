@@ -6,17 +6,17 @@ void	init_st_rc(t_data *main, t_raycast *raycast)
 	raycast->posY = (float)main->player_base[1] + 0.5;
 	raycast->main = main;
 	raycast->cameraX = 0.0;
-	raycast->moveSpeed = 0.5;
+	raycast->moveSpeed = 0.05;
 	raycast->rotSpeed = 0.1;
 	if (main->playdir == 'N')
 	{
 		raycast->dirX = 0;
-		raycast->dirY = 1;
+		raycast->dirY = -1;
 	}
 	if (main->playdir == 'S')
 	{
 		raycast->dirX = 0;
-		raycast->dirY = -1;
+		raycast->dirY = 1;
 	}
 	if (main->playdir == 'E')
 	{
@@ -28,16 +28,10 @@ void	init_st_rc(t_data *main, t_raycast *raycast)
 		raycast->dirX = -1;
 		raycast->dirY = 0;
 	}
+	//printf("x: %d\n y: %d\n", main->player_base[0], main->player_base[1]);
 	main->map[main->player_base[1]][main->player_base[0]] = '0';
-	int i;
-	i = 0;
-	while(main->map[i])
-	{
-		printf("%s\n", main->map[i]);
-		i++;
-	}
-	raycast->planeX = raycast->dirY * 0.66;
-	raycast->planeY = -raycast->dirX * 0.66;
+	raycast->planeX = -raycast->dirY * 0.66;
+	raycast->planeY = raycast->dirX * 0.66;
 	ft_open_args(main, raycast);
 	// printf("init %p\n", raycast);
 }
@@ -56,14 +50,14 @@ int	keyhook(int keycode, t_raycast *raycast)
 	oldPlaneX = raycast->planeX;
 	if (keycode == ESC)
 		free_all();
-	if (keycode == AR_RIGHT)
+	if (keycode == AR_LEFT)
 	{
 		raycast->dirX = raycast->dirX * cos(-raycast->rotSpeed) - raycast->dirY * sin(-raycast->rotSpeed);
 		raycast->dirY = oldDirX * sin(-raycast->rotSpeed) + raycast->dirY * cos(-raycast->rotSpeed);
 		raycast->planeX = raycast->planeX * cos(-raycast->rotSpeed) - raycast->planeY * sin(-raycast->rotSpeed);
 		raycast->planeY = oldPlaneX * sin(-raycast->rotSpeed) + raycast->planeY * cos(raycast->rotSpeed);
 	}
-	if (keycode == AR_LEFT)
+	if (keycode == AR_RIGHT)
 	{
 		raycast->dirX = raycast->dirX * cos(raycast->rotSpeed) - raycast->dirY * sin(raycast->rotSpeed);
 		raycast->dirY = oldDirX * sin(raycast->rotSpeed) + raycast->dirY * cos(raycast->rotSpeed);
@@ -72,18 +66,34 @@ int	keyhook(int keycode, t_raycast *raycast)
 	}
 	if (keycode == S)
 	{
-		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * raycast->moveSpeed)] != '1')
-			raycast->posX += raycast->dirX * raycast->moveSpeed;
-		printf("x: %d\n y:%d\n", (int)(raycast->posX + raycast->dirX * raycast->moveSpeed), (int)raycast->posY );
-		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * raycast->moveSpeed)][(int)raycast->posX] != '1')
-			raycast->posY += raycast->dirY * raycast->moveSpeed;
+		if(raycast->main->map[(int)(raycast->posY - raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
+			raycast->posY -= raycast->dirY * raycast->moveSpeed;
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+			raycast->posX -= raycast->dirX * raycast->moveSpeed;
+
+	}
+	if (keycode == A)
+	{
+		if(raycast->main->map[(int)(raycast->posY - raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
+			raycast->posX -= raycast->planeX * raycast->moveSpeed;
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+			raycast->posY -= raycast->planeY * raycast->moveSpeed;
+
+	}
+	if (keycode == D)
+	{
+		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)(raycast->posX)] != '1')
+			raycast->posX += raycast->planeX * raycast->moveSpeed;
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+			raycast->posY += raycast->planeY * raycast->moveSpeed;
+
 	}
 	if (keycode == W)
 	{
-		if(raycast->main->map[(int)(raycast->posX - raycast->dirX * raycast->moveSpeed)][(int)raycast->posY] != '1')
-			raycast->posX -= raycast->dirX * raycast->moveSpeed;
-		if(raycast->main->map[(int)raycast->posX][(int)(raycast->posY - raycast->dirY * raycast->moveSpeed)] != '1')
-			raycast->posY -= raycast->dirY * raycast->moveSpeed;
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+			raycast->posX += raycast->dirX * raycast->moveSpeed;
+		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
+			raycast->posY += raycast->dirY * raycast->moveSpeed;
 	}
 	return (0);
 }
@@ -98,7 +108,8 @@ void	calc_step_and_sideDist(t_raycast *raycast)
 	else
 	{
 		raycast->stepX = 1;
-		raycast->sideDistX = (raycast->posX + 1.0) * raycast->deltaDistX;
+		raycast->sideDistX = (raycast->mapX + 1.0 - raycast->posX) * raycast->deltaDistX;
+		// raycast->sideDistX = (raycast->posX + 1.0) * raycast->deltaDistX;
 	}
 	if (raycast->rayDirY < 0)
 	{
@@ -108,7 +119,8 @@ void	calc_step_and_sideDist(t_raycast *raycast)
 	else
 	{
 		raycast->stepY = 1;
-		raycast->sideDistY = (raycast->posY + 1.0) * raycast->deltaDistY;
+		raycast->sideDistY = (raycast->mapY + 1.0 - raycast->posY) * raycast->deltaDistY;
+		// raycast->sideDistY = (raycast->posY + 1.0) * raycast->deltaDistY;
 	}
 }
 
@@ -185,13 +197,13 @@ void	calc(t_raycast *raycast, t_data *main)
 			drawEnd = screenHeight - 1;
 		int	color;
 		if (!side && raycast->mapX < main->player_base[0]) // w
-			color = 0x549FB8;
+			color = 0xFF0000;
 		if (!side && raycast->mapX >= main->player_base[0]) // e
-			color = 0xB22222;
+			color = 0x00FF00;
 		if (side && raycast->mapY < main->player_base[1]) // n
-			color = 0x228B22;
+			color = 0x0000FF;
 		if (side && raycast->mapY >= main->player_base[1]) // s
-			color = 0x40E0D0;
+			color = 0x000000;
 		draw_line(x, drawStart, drawEnd, color, raycast);
 		x++;
 	}
@@ -200,6 +212,7 @@ void	calc(t_raycast *raycast, t_data *main)
 
 int	render(t_data *main)
 {
+	// check-keys(main);
 	mlx_clear_window(main->raycast->mlx, main->raycast->win);
 	calc(main->raycast, main);
 	return (0);
