@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/10 19:48:58 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/12 19:45:34 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void	ft_check_format(char *name)
 int	main(int argc, char *argv[])
 {
 	t_data		*data;
+	t_pixel		pixel;
 	t_raycast	raycast;
 	int			fd;
 
@@ -86,9 +87,10 @@ int	main(int argc, char *argv[])
 	data->raycast = &raycast;
 	raycast.mlx = mlx_init();
 	init_st_rc(data, &raycast);
-	printf("main: %p\n", &raycast);
-	printf("main: %p\n", data);
+	raycast.pixel = &pixel;
 	raycast.win = mlx_new_window(raycast.mlx, screenWidth, screenHeight, "privetyli");
+	pixel.img = mlx_new_image(raycast.mlx, screenWidth, screenHeight);
+	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bpp,&pixel.line_len, &pixel.endian);
 	mlx_hook(raycast.win, 2, 0, keyhook, &raycast);
 	mlx_hook(raycast.win, 17, 0, free_all, &raycast);
 	mlx_loop_hook(raycast.mlx, render, data);

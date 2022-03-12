@@ -25,6 +25,8 @@
 void	ft_error(t_data *data, char *msg, int op);
 int		ft_open(char *flnm);
 void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln);
+void	pixel_put(t_pixel *pixel, int x, int y, int color);
+// void	pixel_put(t_raycast *raycast, int x, int y, int color);
 
 //Функции для работы с массивом
 char	**ft_arr_plus_one(char ***sub_arr, char *str, int i, int ln);

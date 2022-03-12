@@ -7,4 +7,8 @@ int		free_all(void);
 void	calc(t_raycast *raycast, t_data *main);
 int		render(t_data *main);
 
+// init.c
+void	init_st_rc2(t_data *main, t_raycast *raycast);
+void	init_st_rc(t_data *main, t_raycast *raycast);
+
 #endif

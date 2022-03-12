@@ -6,12 +6,22 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/10 17:22:35 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/12 19:43:35 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
+
+typedef struct s_pixel
+{
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				line_len;
+	int				endian;
+}				t_pixel;
+
 
 typedef struct s_raycast
 {
@@ -38,6 +48,7 @@ typedef struct s_raycast
 	int				mapX; // в какой мы клеточке
 	int				mapY; // в какой мы клеточке
 	struct s_data	*main;
+	t_pixel			*pixel;
 }			t_raycast;
 
 typedef struct s_txtr

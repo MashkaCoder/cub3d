@@ -1,40 +1,4 @@
 #include "../cub.h"
-#include <string.h>
-void	init_st_rc(t_data *main, t_raycast *raycast)
-{
-	raycast->posX = (float)main->player_base[0] + 0.5;
-	raycast->posY = (float)main->player_base[1] + 0.5;
-	raycast->main = main;
-	raycast->cameraX = 0.0;
-	raycast->moveSpeed = 0.05;
-	raycast->rotSpeed = 0.1;
-	if (main->playdir == 'N')
-	{
-		raycast->dirX = 0;
-		raycast->dirY = -1;
-	}
-	if (main->playdir == 'S')
-	{
-		raycast->dirX = 0;
-		raycast->dirY = 1;
-	}
-	if (main->playdir == 'E')
-	{
-		raycast->dirX = 1;
-		raycast->dirY = 0;
-	}
-	if (main->playdir == 'W')
-	{
-		raycast->dirX = -1;
-		raycast->dirY = 0;
-	}
-	//printf("x: %d\n y: %d\n", main->player_base[0], main->player_base[1]);
-	main->map[main->player_base[1]][main->player_base[0]] = '0';
-	raycast->planeX = -raycast->dirY * 0.66;
-	raycast->planeY = raycast->dirX * 0.66;
-	ft_open_args(main, raycast);
-	// printf("init %p\n", raycast);
-}
 
 int	free_all(void)
 {
@@ -66,33 +30,33 @@ int	keyhook(int keycode, t_raycast *raycast)
 	}
 	if (keycode == S)
 	{
-		if(raycast->main->map[(int)(raycast->posY - raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
-			raycast->posY -= raycast->dirY * raycast->moveSpeed;
-		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->dirX * (float)0.11)] != '1')
 			raycast->posX -= raycast->dirX * raycast->moveSpeed;
+		if(raycast->main->map[(int)(raycast->posY - raycast->dirY * (float)0.11)][(int)raycast->posX] != '1')
+			raycast->posY -= raycast->dirY * raycast->moveSpeed;
 
 	}
 	if (keycode == A)
 	{
-		if(raycast->main->map[(int)(raycast->posY - raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->planeX * (float)0.11)] != '1')
 			raycast->posX -= raycast->planeX * raycast->moveSpeed;
-		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX - raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+		if(raycast->main->map[(int)(raycast->posY - raycast->planeY * (float)0.11)][(int)raycast->posX] != '1')
 			raycast->posY -= raycast->planeY * raycast->moveSpeed;
 
 	}
 	if (keycode == D)
 	{
-		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)(raycast->posX)] != '1')
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->planeX * (float)0.11)] != '1')
 			raycast->posX += raycast->planeX * raycast->moveSpeed;
-		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+		if(raycast->main->map[(int)(raycast->posY + raycast->planeY * (float)0.11)][(int)(raycast->posX)] != '1')
 			raycast->posY += raycast->planeY * raycast->moveSpeed;
 
 	}
 	if (keycode == W)
 	{
-		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * /*raycast->moveSpeed **/ 0.11)] != '1')
+		if(raycast->main->map[(int)raycast->posY][(int)(raycast->posX + raycast->dirX * (float)0.11)] != '1')
 			raycast->posX += raycast->dirX * raycast->moveSpeed;
-		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * /*raycast->moveSpeed **/ 0.11)][(int)raycast->posX] != '1')
+		if(raycast->main->map[(int)(raycast->posY + raycast->dirY * (float)0.11)][(int)raycast->posX] != '1')
 			raycast->posY += raycast->dirY * raycast->moveSpeed;
 	}
 	return (0);
@@ -131,19 +95,36 @@ void draw_line(int x, int drawStart, int drawEnd, int color, t_raycast *raycast)
 	c = 0;
 	while (c < drawStart)
 	{
+		// pixel_put(raycast->pixel, x, c, raycast->main->ceilling);
+		// pixel_put(raycast, x, c, raycast->main->ceilling);
 		mlx_pixel_put(raycast->mlx, raycast->win, x, c, raycast->main->ceilling);
 		c++;
 	}
 	while (drawStart <= drawEnd)
 	{
+		// pixel_put(raycast->pixel, x, drawStart, color);
+		// pixel_put(raycast, x, drawStart, color);
 		mlx_pixel_put(raycast->mlx, raycast->win, x, drawStart, color);
 		drawStart++;
 	}
 	while (drawEnd < screenHeight)
 	{
-		mlx_pixel_put(raycast->mlx, raycast->win, x, drawEnd, raycast->main->floor);
+		// pixel_put(raycast->pixel, x, drawEnd, raycast->main->floor);
+		// pixel_put(raycast, x, drawEnd, raycast->main->floor);
 		drawEnd++;
+		mlx_pixel_put(raycast->mlx, raycast->win, x, drawEnd, raycast->main->floor);
 	}
+}
+
+void	dir_and_dist(t_raycast *raycast, t_data *main, int x)
+{
+	raycast->cameraX = 2 * x / (float)screenWidth - 1;
+	raycast->rayDirX = raycast->dirX + raycast->planeX * raycast->cameraX;
+	raycast->rayDirY = raycast->dirY + raycast->planeY * raycast->cameraX;
+	raycast->deltaDistX = fabs(1 / raycast->rayDirX);
+	raycast->deltaDistY = fabs(1 / raycast->rayDirY);
+	raycast->mapX = main->player_base[0];
+	raycast->mapY = main->player_base[1];
 }
 
 void	calc(t_raycast *raycast, t_data *main)
@@ -159,13 +140,7 @@ void	calc(t_raycast *raycast, t_data *main)
 	while (x < screenWidth)
 	{
 		hit = 0;
-		raycast->cameraX = 2 * x / (float)screenWidth - 1;
-		raycast->rayDirX = raycast->dirX + raycast->planeX * raycast->cameraX;
-		raycast->rayDirY = raycast->dirY + raycast->planeY * raycast->cameraX;
-		raycast->deltaDistX = fabs(1 / raycast->rayDirX);
-		raycast->deltaDistY = fabs(1 / raycast->rayDirY);
-		raycast->mapX = main->player_base[0];
-		raycast->mapY = main->player_base[1];
+		dir_and_dist(raycast, main, x);
 		calc_step_and_sideDist(raycast);
 		while (!hit)
 		{
@@ -207,7 +182,7 @@ void	calc(t_raycast *raycast, t_data *main)
 		draw_line(x, drawStart, drawEnd, color, raycast);
 		x++;
 	}
-
+	// mlx_put_image_to_window(main->raycast->mlx, main->raycast->win, main->raycast->pixel->img, 0, 0);
 }
 
 int	render(t_data *main)
@@ -217,14 +192,3 @@ int	render(t_data *main)
 	calc(main->raycast, main);
 	return (0);
 }
-
-// int	dolznoBitVmain(t_data *main, t_raycast *raycast)
-// {
-// 	raycast->mlx = mlx_init();
-// 	init_st_rc(main, raycast);
-// 	raycast->win = mlx_new_window(raycast->mlx, screenWidth, screenHeight, "privetyli");
-// 	mlx_hook(raycast->win, 2, 0, keyhook, raycast);
-// 	mlx_hook(raycast->win, 2, 0, free_all, raycast);
-// 	mlx_loop(raycast->mlx);
-// 	return (0);
-// }
