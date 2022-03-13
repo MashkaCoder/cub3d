@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: scoach <scoach@student.42.fr>              +#+  +:+       +#+         #
+#    By: mariakorcagina <mariakorcagina@student.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/07 16:15:59 by scoach            #+#    #+#              #
-#    Updated: 2021/12/16 17:44:58 by scoach           ###   ########.fr        #
+#    Updated: 2022/03/14 00:06:09 by mariakorcag      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ B_SRCS	=	${SRC}ft_lstnew.c		${SRC}ft_lstlast.c		${SRC}ft_lstclear.c \
 			${SRC}ft_lstadd_front.c	${SRC}ft_lstadd_back.c	${SRC}ft_lstiter.c \
 			${SRC}ft_lstsize.c		${SRC}ft_lstdelone.c	${SRC}ft_lstmap.c
 
-OBJS	= $(SRCS:.c=.o)
-B_OBJS	= $(B_SRCS:.c=.o)
+OBJS	= $(SRCS:c=o)
+B_OBJS	= $(B_SRCS:c=o)
 
 NAME	= libft.a
 
@@ -46,20 +46,23 @@ all:		${NAME}
 	
 
 ${NAME}:	${OBJS}
-	${AR} ${NAME} ${OBJS}
+	@echo "\n"
+	@echo "\033[0;32mCompiling libf...✅"
+	@${AR} ${NAME} ${OBJS}
 
 %.o: %.c ${HEADER}
-	gcc ${CFLAGS} -c $< -o $@
+	@printf "\033[0;33mGenerating libft objects 🔜 %-33.33s\r" $@
+	@gcc ${CFLAGS} -c $< -o $@
 
 bonus:
 
 	@make OBJS="${B_OBJS}" all
 
 clean:
-	${RM} ${OBJS} ${B_OBJS} ${D_FILES}
+	@${RM} ${OBJS} ${B_OBJS} ${D_FILES}
 
 fclean:	clean
-	${RM} ${NAME}
+	@${RM} ${NAME}
 
 re:	fclean all
 

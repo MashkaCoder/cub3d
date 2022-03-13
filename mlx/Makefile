@@ -14,11 +14,17 @@ CFLAGS+= -DSTRINGPUTX11
 all: $(NOM)
 
 $(NOM):	$(OBJ)
-	ar -r $(NOM) $(OBJ)
-	ranlib $(NOM)
+	@echo "\n"
+	@-echo "\033[0;32mCompiling mlx...✅"
+	@-ar -r $(NOM) $(OBJ)
+	@-ranlib $(NOM)
+
+%.o: %.c
+	@-printf "\033[0;33mGenerating mlx objects 🔜 %-33.33s\r" $@
+	@-gcc ${CFLAGS} -c $< -o $@ 
 
 clean:
-	rm -f $(NOM) $(OBJ) *~
-	rm -f mlx_app
+	@rm -f $(NOM) $(OBJ) *~
+	@rm -f mlx_app
 
 re: clean all

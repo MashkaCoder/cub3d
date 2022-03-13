@@ -10,7 +10,8 @@
 # define AR_RIGHT 124
 # define screenWidth 640
 # define screenHeight 480
-# include <mlx.h>
+// # include <mlx.h>
+# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <fcntl.h>
 # include <errno.h>
