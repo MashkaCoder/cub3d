@@ -54,7 +54,7 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 		if ((m[y][0] != '1' && m[y][0] != ' ')
 			|| (m[y][data->width - 1] != '1' && m[y][data->width - 1] != ' '))
 			ft_error(data, "Frame is not full!", 0);
-		while (m[y][x + 1] != '\n' && m[y][x + 1] != '\0')
+		while (m[y][x + 1] != '\0')
 		{
 			if ((m[y - 1][x] == ' ' || m[y + 1][x] == ' ' || m[y][x - 1] == ' '
 				|| m[y][x + 1] == ' ') && m[y][x] != '1' && m[y][x] != ' ')
@@ -67,11 +67,14 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 
 static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 {
-	while (map[0][data->width] != '\n' && map[0][data->width] != '\0')
+	int j;
+	
+	j = 0;
+	while (map[0][j] != '\0')
 	{
-		if (map[0][data->width] != '1' && map[0][data->width] != ' ')
+		if (map[0][j] != '1' && map[0][j] != ' ')
 			ft_error(data, "Frame is not full!!!", 0);
-		data->width++;
+		j++;
 	}
 	if (data->map[1] != NULL)
 	{
@@ -95,7 +98,7 @@ static int	ft_check_strangers_fullness(t_data *data, char *m, int j)
 	while (m[i] != '\0')
 	{
 		if (m[i] != '0' && m[i] != '1' && m[i] != 'N' && m[i] != 'S'
-			&& m[i] != 'E' && m[i] != '\n' && m[i] != 'W' && m[i] != ' ')
+			&& m[i] != 'E' && m[i] != 'W' && m[i] != ' ')
 		{
 			m[i + 1] = '\0';
 			ft_error(data, ft_strjoin("Illegal character ", &(m[i])), 0);
