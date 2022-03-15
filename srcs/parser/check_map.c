@@ -61,6 +61,7 @@ static void	ft_check_core(t_data *data, char **m, int y, int x)
 				ft_error(data, "Frame is not full!!", 0);
 			x++;
 		}
+		x = 0;
 		y++;
 	}
 }
@@ -78,7 +79,7 @@ static void	ft_check_rectangularity_frame(t_data *data, char **map, int i)
 	}
 	if (data->map[1] != NULL)
 	{
-		ft_check_core(data, map, 1, 1);
+		ft_check_core(data, map, 1, 0);
 		while (map[data->high - 1][i] != '\0')
 		{
 			if (map[data->high - 1][i] != '1' && map[data->high - 1][i] != ' ')
