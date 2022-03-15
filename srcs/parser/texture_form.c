@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 18:52:46 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/14 19:11:15 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/16 01:27:34 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_open_args(t_data *data, t_raycast *raycast)
 	data->walls->east = mlx_xpm_file_to_image(raycast->mlx, data->nswe[3],
 			&img_width, &img_height);
 	raycast->txt = data->walls;
-	ft_memset(raycast->txt->buffer, 0 , sizeof(int));
+	ft_memset(raycast->txt->buffer, 0, sizeof(int));
 }
 
 void	ft_destroy_images(t_data *data)
@@ -45,7 +45,6 @@ void	ft_destroy_images(t_data *data)
 	mlx_destroy_image(data->raycast->mlx, data->walls->west);
 	mlx_destroy_image(data->raycast->mlx, data->walls->east);
 }
-
 
 // void	ft_open_args(t_data *data, void *mlx)
 // {

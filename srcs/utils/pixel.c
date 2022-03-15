@@ -23,10 +23,19 @@ void	pixel_put(t_pixel *pixel, int x, int y, int color)
 // 	ptr = txt->img_data + (y * txt->line_len + x * (txt->bpp / 8));
 // 	return (*(int *)ptr);
 // }
+
+// int get_pixel_color(t_img *img, int x, int y)
+// {
+//  int color;
+
+//  color = *(unsigned int *)(img->addr + (y * img->line_length + x * (img->bits_per_pixel / 8)));
+//  return (color);
+// }
+
 int	get_pixel_color(t_textures *txt, int x, int y)
 {
 	int	color;
 
-	color = *(unsigned int *)(txt->img_ptr + (y * txt->line_len+ x * (txt->bpp / 8)));
+	color = *(unsigned int *)(txt->img_data + (y * txt->line_len + x * (txt->bpp / 8)));
 	return (color);
 }

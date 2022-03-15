@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/14 22:17:43 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/16 02:15:59 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ int	main(int argc, char *argv[])
 	raycast.win = mlx_new_window(raycast.mlx, screenWidth, screenHeight, "privetyli");
 	pixel.img = mlx_new_image(raycast.mlx, screenWidth, screenHeight);
 	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bpp,&pixel.line_len, &pixel.endian);
-	mlx_hook(raycast.win, 2, 0, keyhook, &raycast);
+	printf("%p\n", raycast.keys);
+	mlx_hook(raycast.win, 2, 0, keypress, &raycast.keys);
+	mlx_hook(raycast.win, 3, 0, keyrelease, &raycast.keys);
 	mlx_hook(raycast.win, 17, 0, free_all, &raycast);
 	mlx_loop_hook(raycast.mlx, render, data);
 	mlx_loop(raycast.mlx);

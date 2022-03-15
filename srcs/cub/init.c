@@ -24,6 +24,16 @@ void	init_st_rc2(t_data *main, t_raycast *raycast)
 	}
 }
 
+void	init_key(t_raycast *raycast)
+{
+	t_keys	keys;
+
+	ft_memset(&keys, 0, sizeof(t_keys));
+	raycast->keys = &keys;
+	printf("init %p\n", raycast->keys);
+	printf("init %p\n", &keys);
+}
+
 void	init_st_rc(t_data *main, t_raycast *raycast)
 {
 	raycast->posX = (float)main->player_base[0] + 0.5;
@@ -38,8 +48,8 @@ void	init_st_rc(t_data *main, t_raycast *raycast)
 	main->map[main->player_base[1]][main->player_base[0]] = '0';
 	raycast->planeX = -raycast->dirY * 0.66;
 	raycast->planeY = raycast->dirX * 0.66;
-	// ft_open_args(main, raycast);
-	printf("popa\n");
+	init_key(raycast);
+	printf("%p\n", raycast->keys);
 	init_txt(main);
 }
 

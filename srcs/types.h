@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/15 03:17:24 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/16 01:40:27 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,16 @@ typedef struct s_textures
 	int		height;
 	int		bpp;
 }	t_textures;
+
+typedef struct s_keys
+{
+	int	key_a;
+	int	key_d;
+	int	key_w;
+	int	key_s;
+	int	key_la;
+	int	key_ra;
+}			t_keys;
 
 typedef struct s_raycast
 {
@@ -63,9 +73,15 @@ typedef struct s_raycast
 	float			step; // Насколько увеличить координату текстуры на пиксель экрана
 	float			texPos; // Начальная координата текстуры
 	int				texY;
+	int				drawStart;
+	int				drawEnd;
+	int				lineHeight;
+	int				side;
+	int				hit;
 	struct s_data	*main;
 	t_pixel			*pixel;
 	t_textures		*txt_pxl;
+	t_keys			*keys;
 	struct s_txtr	*txt;
 }			t_raycast;
 
