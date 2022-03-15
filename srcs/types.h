@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/12 19:43:35 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/15 03:17:24 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,17 @@ typedef struct s_pixel
 	int				endian;
 }				t_pixel;
 
+typedef struct s_textures
+{
+	void	*img_data;
+	char	*img_ptr;
+	int		*data;
+	int		line_len;
+	int		endian;
+	int		width;
+	int		height;
+	int		bpp;
+}	t_textures;
 
 typedef struct s_raycast
 {
@@ -47,18 +58,26 @@ typedef struct s_raycast
 	int				stepY; //в каком направлении делать шаг по оси y (либо +1, либо -1)
 	int				mapX; // в какой мы клеточке
 	int				mapY; // в какой мы клеточке
+	float			wallX; // в какое место мы ударились
+	int				texX; // x-coord text
+	float			step; // Насколько увеличить координату текстуры на пиксель экрана
+	float			texPos; // Начальная координата текстуры
+	int				texY;
 	struct s_data	*main;
 	t_pixel			*pixel;
+	t_textures		*txt_pxl;
+	struct s_txtr	*txt;
 }			t_raycast;
 
 typedef struct s_txtr
 {
-	int		width;
-	int		height;
-	void	*north;
-	void	*south;
-	void	*west;
-	void	*east;
+	int			width;
+	int			height;
+	void		*north;
+	void		*south;
+	void		*west;
+	void		*east;
+	int			buffer[screenHeight][screenWidth];
 }				t_txtr;
 
 typedef struct s_data
@@ -73,6 +92,10 @@ typedef struct s_data
 	char		playdir;
 	char		**gnln;
 	// void		*mlx;
+	t_textures	*north;
+	t_textures	*south;
+	t_textures	*west;
+	t_textures	*east;
 	t_txtr		*walls;
 	t_raycast	*raycast;
 }				t_data;

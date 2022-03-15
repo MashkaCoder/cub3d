@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 18:52:46 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/08 21:11:24 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/14 19:11:15 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 // сорри, я немного сюда вмешалась
 void	ft_open_args(t_data *data, t_raycast *raycast)
 {
-	int	img_height;
-	int	img_width;
+	int		img_height;
+	int		img_width;
 
 	if (access(data->nswe[0], O_RDONLY) == -1
 		|| access(data->nswe[1], O_RDONLY) == -1
@@ -34,6 +34,8 @@ void	ft_open_args(t_data *data, t_raycast *raycast)
 			&img_width, &img_height);
 	data->walls->east = mlx_xpm_file_to_image(raycast->mlx, data->nswe[3],
 			&img_width, &img_height);
+	raycast->txt = data->walls;
+	ft_memset(raycast->txt->buffer, 0 , sizeof(int));
 }
 
 void	ft_destroy_images(t_data *data)

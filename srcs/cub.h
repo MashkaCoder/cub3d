@@ -10,6 +10,8 @@
 # define AR_RIGHT 124
 # define screenWidth 640
 # define screenHeight 480
+# define texWidth 64
+# define texHeight 64
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include <stdio.h>
@@ -27,6 +29,8 @@ void	ft_error(t_data *data, char *msg, int op);
 int		ft_open(char *flnm);
 void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln);
 void	pixel_put(t_pixel *pixel, int x, int y, int color);
+// int		pixel_get(t_textures *txt, int x, int y);
+int		get_pixel_color(t_textures *txt, int x, int y);
 // void	pixel_put(t_raycast *raycast, int x, int y, int color);
 
 //Функции для работы с массивом

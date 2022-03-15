@@ -10,5 +10,8 @@ int		render(t_data *main);
 // init.c
 void	init_st_rc2(t_data *main, t_raycast *raycast);
 void	init_st_rc(t_data *main, t_raycast *raycast);
+void	init_txt(t_data *main);
+void	open_txt(t_data *main, t_textures *txt, char *path);
+void	load_txt(t_data *main);
 
 #endif

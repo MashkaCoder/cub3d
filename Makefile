@@ -15,6 +15,7 @@ UTILS = srcs/utils/utils.c\
 		srcs/utils/free.c\
 		srcs/utils/str_arr_utils.c\
 		srcs/utils/str_arr_utils2.c\
+		srcs/utils/pixel.c\
 
 SRC =	${GNL} ${PARS} ${UTILS} ${CUB}\
 		srcs/main.c\
