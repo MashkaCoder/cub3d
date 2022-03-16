@@ -30,8 +30,11 @@ void	init_key(t_raycast *raycast)
 
 	ft_memset(&keys, 0, sizeof(t_keys));
 	raycast->keys = &keys;
-	printf("init %p\n", raycast->keys);
-	printf("init %p\n", &keys);
+	raycast->keys->key_la = 0;
+	raycast->keys->key_la = 0;
+	// keys.key_a = 1;
+	// printf("keys %d\n", keys.key_a);
+	// printf("keys %d\n", raycast->keys->key_a);
 }
 
 void	init_st_rc(t_data *main, t_raycast *raycast)
