@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keyhook.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 19:47:40 by chasimir          #+#    #+#             */
+/*   Updated: 2022/03/16 19:47:41 by chasimir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../cub.h"
 
 int	free_all(void)
@@ -7,7 +19,6 @@ int	free_all(void)
 
 int	keypress(int keycode, t_keys *keys)
 {
-	// printf("hello\n");
 	if (keycode == ESC)
 		free_all();
 	if (keycode == AR_LEFT)
@@ -21,10 +32,7 @@ int	keypress(int keycode, t_keys *keys)
 	if (keycode == D)
 		keys->key_d = 1;
 	if (keycode == W)
-		{
-			keys->key_w = 1;
-			printf("press w %d\n", keys->key_w);
-		}
+		keys->key_w = 1;
 	return (0);
 }
 
@@ -45,29 +53,6 @@ int	keyrelease(int keycode, t_keys *keys)
 	return (0);
 }
 
-void	rotate(t_raycast *raycast, char dir)
-{
-	float	oldDirX;
-	float	oldPlaneX;
-
-	oldDirX = raycast->dirX;
-	oldPlaneX = raycast->planeX;
-	if (dir == 'l')
-	{
-		raycast->dirX = raycast->dirX * cos(-raycast->rotSpeed) - raycast->dirY * sin(-raycast->rotSpeed);
-		raycast->dirY = oldDirX * sin(-raycast->rotSpeed) + raycast->dirY * cos(-raycast->rotSpeed);
-		raycast->planeX = raycast->planeX * cos(-raycast->rotSpeed) - raycast->planeY * sin(-raycast->rotSpeed);
-		raycast->planeY = oldPlaneX * sin(-raycast->rotSpeed) + raycast->planeY * cos(raycast->rotSpeed);
-	}
-	if (dir == 'r')
-	{
-		raycast->dirX = raycast->dirX * cos(raycast->rotSpeed) - raycast->dirY * sin(raycast->rotSpeed);
-		raycast->dirY = oldDirX * sin(raycast->rotSpeed) + raycast->dirY * cos(raycast->rotSpeed);
-		raycast->planeX = raycast->planeX * cos(raycast->rotSpeed) - raycast->planeY * sin(raycast->rotSpeed);
-		raycast->planeY = oldPlaneX * sin(raycast->rotSpeed) + raycast->planeY * cos(raycast->rotSpeed);
-	}
-
-}
 void	key_event(t_raycast *raycast, t_keys *keys)
 {
 	if (keys->key_a)
@@ -78,12 +63,8 @@ void	key_event(t_raycast *raycast, t_keys *keys)
 		move_s(raycast);
 	if (keys->key_w)
 		move_w(raycast);
-	// if (keys->key_la)
-	// 	rotate_l(raycast);
-	// if (keys->key_ra)
-	// 	rotate_r(raycast);
 	if (keys->key_la)
-		rotate(raycast, 'l');
+		rotate_l(raycast);
 	if (keys->key_ra)
-		rotate(raycast, 'r');
+		rotate_r(raycast);
 }

@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str_arr_utils2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/04 13:55:12 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 13:45:20 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/16 20:17:59 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub.h"
-
-
 
 static char	**ft_strtoarr(char *str)
 {

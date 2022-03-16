@@ -1,10 +1,12 @@
 NAME = cub3d
 
 CUB = srcs/cub/pognali_epta.c\
-	srcs/cub/init.c\
+	srcs/cub/init_struct.c\
 	srcs/cub/keyhook.c\
 	srcs/cub/move.c\
 	srcs/cub/rotate.c\
+	srcs/cub/open_txt.c\
+	srcs/cub/draw_and_search_dz.c\
 
 GNL = srcs/gnl/get_next_line_utils.c\
 	srcs/gnl/get_next_line.c\
