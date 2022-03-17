@@ -6,11 +6,11 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:04:32 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/16 20:08:13 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:27:37 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CUB_CAST_H
+#ifndef CUB_CAST_H
 # define CUB_CAST_H
 
 // pognali_epta.c
@@ -48,5 +48,9 @@ void	rotate_r(t_raycast *raycast);
 void	draw_line(t_raycast *raycast, t_textures *txt, int y, int x);
 void	seach_draw_and_txt(t_raycast *raycast);
 void	choice_txt(t_raycast *raycast, t_data *main, int x);
+
+//free.c
+void	free_all_raycast(t_data *main);
+void	free_txtr(t_data *main);
 
 #endif

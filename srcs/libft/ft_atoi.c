@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/01 10:50:56 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/04 20:34:31 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/17 18:46:52 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	ft_atoi(const char *str)
 		i++;
 	if (str[i] == '-')
 	{
-		neg = -1, i++;
+		neg = -1;
+		i++;
 		if (!ft_isdigit(str[i]))
 			atoi_error();
 	}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/17 19:38:44 by chasimir          #+#    #+#             */
+/*   Updated: 2022/03/17 19:38:45 by chasimir         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB_H
 # define CUB_H
 
@@ -8,10 +20,10 @@
 # define ESC 53
 # define AR_LEFT 123
 # define AR_RIGHT 124
-# define screenWidth 640
-# define screenHeight 480
-# define texWidth 64
-# define texHeight 64
+# define SCREEN_WIDTH 640
+# define SCREEN_HEIGHT 480
+# define TEXTURE_WIDTH 64
+# define TEXTURE_HEIGHT 64
 // # include <mlx.h>
 # include "../mlx/mlx.h"
 # include <stdio.h>

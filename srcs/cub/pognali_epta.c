@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:04:00 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/16 20:04:01 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:41:04 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,41 @@
 
 void	calc_step_and_sidedist(t_raycast *raycast)
 {
-	if (raycast->rayDirX < 0)
+	if (raycast->raydir_x < 0)
 	{
-		raycast->stepX = -1;
-		raycast->sideDistX = (raycast->posX - raycast->mapX)
-			* raycast->deltaDistX;
+		raycast->step_x = -1;
+		raycast->side_dist_x = (raycast->pos_x - raycast->map_x)
+			* raycast->delta_dist_x;
 	}
 	else
 	{
-		raycast->stepX = 1;
-		raycast->sideDistX = (raycast->mapX + 1.0f - raycast->posX)
-			* raycast->deltaDistX;
+		raycast->step_x = 1;
+		raycast->side_dist_x = (raycast->map_x + 1.0f - raycast->pos_x)
+			* raycast->delta_dist_x;
 	}
-	if (raycast->rayDirY < 0)
+	if (raycast->raydir_y < 0)
 	{
-		raycast->stepY = -1;
-		raycast->sideDistY = (raycast->posY - raycast->mapY)
-			* raycast->deltaDistY;
+		raycast->step_y = -1;
+		raycast->side_dist_y = (raycast->pos_y - raycast->map_y)
+			* raycast->delta_dist_y;
 	}
 	else
 	{
-		raycast->stepY = 1;
-		raycast->sideDistY = (raycast->mapY + 1.0f - raycast->posY)
-			* raycast->deltaDistY;
+		raycast->step_y = 1;
+		raycast->side_dist_y = (raycast->map_y + 1.0f - raycast->pos_y)
+			* raycast->delta_dist_y;
 	}
 }
 
 void	dir_and_dist(t_raycast *raycast, int x)
 {
-	raycast->cameraX = 2 * x / (float)screenWidth - 1;
-	raycast->rayDirX = raycast->dirX + raycast->planeX * raycast->cameraX;
-	raycast->rayDirY = raycast->dirY + raycast->planeY * raycast->cameraX;
-	raycast->deltaDistX = fabs(1 / raycast->rayDirX);
-	raycast->deltaDistY = fabs(1 / raycast->rayDirY);
-	raycast->mapX = (int)raycast->posX;
-	raycast->mapY = (int)raycast->posY;
+	raycast->camera_x = 2 * x / (float)SCREEN_WIDTH - 1;
+	raycast->raydir_x = raycast->dir_x + raycast->plane_x * raycast->camera_x;
+	raycast->raydir_y = raycast->dir_y + raycast->plane_y * raycast->camera_x;
+	raycast->delta_dist_x = fabs(1 / raycast->raydir_x);
+	raycast->delta_dist_y = fabs(1 / raycast->raydir_y);
+	raycast->map_x = (int)raycast->pos_x;
+	raycast->map_y = (int)raycast->pos_y;
 }
 
 void	search_hit(t_raycast *raycast, t_data *main)
@@ -56,19 +56,19 @@ void	search_hit(t_raycast *raycast, t_data *main)
 	raycast->hit = 0;
 	while (!raycast->hit)
 	{
-		if (raycast->sideDistX < raycast->sideDistY)
+		if (raycast->side_dist_x < raycast->side_dist_y)
 		{
-			raycast->sideDistX += raycast->deltaDistX;
-			raycast->mapX += raycast->stepX;
+			raycast->side_dist_x += raycast->delta_dist_x;
+			raycast->map_x += raycast->step_x;
 			raycast->side = 0;
 		}
 		else
 		{
-			raycast->sideDistY += raycast->deltaDistY;
-			raycast->mapY += raycast->stepY;
+			raycast->side_dist_y += raycast->delta_dist_y;
+			raycast->map_y += raycast->step_y;
 			raycast->side = 1;
 		}
-		if (main->map[raycast->mapY][raycast->mapX] == '1')
+		if (main->map[raycast->map_y][raycast->map_x] == '1')
 			raycast->hit = 1;
 	}
 }
@@ -78,7 +78,7 @@ void	calc(t_raycast *raycast, t_data *main)
 	int	x;
 
 	x = 0;
-	while (x < screenWidth)
+	while (x < SCREEN_WIDTH)
 	{
 		dir_and_dist(raycast, x);
 		calc_step_and_sidedist(raycast);

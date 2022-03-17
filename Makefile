@@ -7,6 +7,7 @@ CUB = srcs/cub/pognali_epta.c\
 	srcs/cub/rotate.c\
 	srcs/cub/open_txt.c\
 	srcs/cub/draw_and_search_dz.c\
+	srcs/cub/free.c\
 
 GNL = srcs/gnl/get_next_line_utils.c\
 	srcs/gnl/get_next_line.c\
@@ -14,7 +15,6 @@ GNL = srcs/gnl/get_next_line_utils.c\
 PARS =  srcs/parser/check_map.c\
 		srcs/parser/parse_params.c\
 		srcs/parser/parse_rgb.c\
-		srcs/parser/texture_form.c\
 
 UTILS = srcs/utils/utils.c\
 		srcs/utils/free.c\
@@ -38,10 +38,6 @@ OBJ = $(SRC:c=o)
 CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
-
-# gcc -l mlx -framework OpenGL -framework AppKit cub/pognali_epta.c gnl/*.c parser/*.c libft/libft.a utils/*.c main.c
-# CFLAGS = -g
-# gcc -l mlx -framework OpenGL -framework AppKit cub/pognali_epta.c gnl/*.c parser/*.c libft/libft.a utils/*.c main.c && ./a.out test.cub
 
 MLX_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit
 

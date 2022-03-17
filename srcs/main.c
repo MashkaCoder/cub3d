@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/16 18:11:06 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:37:43 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,36 @@ static void	ft_check_format(char *name)
 		ft_error(NULL, "Invalid format: file must have format \".cub\" ", 0);
 }
 
+void	ft_cub(t_data *data)
+{
+	t_pixel		*pixel;
+	t_raycast	*raycast;
+
+	raycast = malloc(sizeof(t_raycast));
+	if (!raycast)
+		exit(EXIT_FAILURE);
+	data->raycast = raycast;
+	raycast->mlx = mlx_init();
+	init_st_rc(data, raycast);
+	pixel = malloc(sizeof(t_pixel));
+	if (!pixel)
+		exit(EXIT_FAILURE);
+	raycast->pixel = pixel;
+	raycast->win = mlx_new_window(raycast->mlx, SCREEN_WIDTH,
+			SCREEN_HEIGHT, "privetyli");
+	pixel->img = mlx_new_image(raycast->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	pixel->addr = mlx_get_data_addr(pixel->img, &pixel->bpp,
+			&pixel->line_len, &pixel->endian);
+	mlx_hook(raycast->win, 2, 0, keypress, raycast->keys);
+	mlx_hook(raycast->win, 3, 0, keyrelease, raycast->keys);
+	mlx_hook(raycast->win, 17, 0, free_all, raycast);
+	mlx_loop_hook(raycast->mlx, render, data);
+	mlx_loop(raycast->mlx);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_data		*data;
-	t_pixel		pixel;
-	t_raycast	raycast;
 	int			fd;
 
 	if (argc < 2)
@@ -82,23 +107,7 @@ int	main(int argc, char *argv[])
 		ft_error(data, ft_itoa(fd), 1);
 	data->high = ft_arrlen(data->map);
 	ft_check_map(data);
-	//ft_cub(data);
-	// i'm sorry, but
-	data->raycast = &raycast;
-	raycast.mlx = mlx_init();
-	init_st_rc(data, &raycast);
-	raycast.pixel = &pixel;
-	raycast.win = mlx_new_window(raycast.mlx, screenWidth, screenHeight, "privetyli");
-	pixel.img = mlx_new_image(raycast.mlx, screenWidth, screenHeight);
-	pixel.addr = mlx_get_data_addr(pixel.img, &pixel.bpp,&pixel.line_len, &pixel.endian);
-	// printf("%p\n", raycast.keys);
-	// mlx_hook(raycast.win, 2, 0, keypress, &raycast);
-	// mlx_hook(raycast.win, 3, 0, keyrelease, &raycast);
-	mlx_hook(raycast.win, 2, 0, keypress, raycast.keys);
-	mlx_hook(raycast.win, 3, 0, keyrelease, raycast.keys);
-	mlx_hook(raycast.win, 17, 0, free_all, &raycast);
-	mlx_loop_hook(raycast.mlx, render, data);
-	mlx_loop(raycast.mlx);
+	ft_cub(data);
 	ft_free_data(data);
 	exit(EXIT_SUCCESS);
 }

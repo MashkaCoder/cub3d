@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 16:48:31 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/16 01:40:27 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 19:37:43 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,34 @@ typedef struct s_raycast
 {
 	void			*mlx;
 	void			*win;
-	float			posX;
-	float			posY;
-	float			dirX;
-	float			dirY;
-	float			planeX;
-	float			planeY;
-	float			moveSpeed;
-	float			rotSpeed;
-	float			cameraX; // коорд х в прост кам
-	float			rayDirX;
-	float			rayDirY;
-	float			sideDistX; //расст кот луч долж пройти от нач позиции до первой стор х
-	float			sideDistY; //расст кот луч долж пройти от нач позиции до первой стор у
-	float			deltaDistX; // дина луча от одной стор х до след стор х
-	float			deltaDistY; // дина луча от одной стор у до след стор у
-	float			perpWallDist;
-	int				stepX; //в каком направлении делать шаг по оси x (либо +1, либо -1)
-	int				stepY; //в каком направлении делать шаг по оси y (либо +1, либо -1)
-	int				mapX; // в какой мы клеточке
-	int				mapY; // в какой мы клеточке
-	float			wallX; // в какое место мы ударились
-	int				texX; // x-coord text
+	float			pos_x;
+	float			pos_y;
+	float			dir_x;
+	float			dir_y;
+	float			plane_x;
+	float			plane_y;
+	float			move_speed;
+	float			rot_speed;
+	float			camera_x; // коорд х в прост кам
+	float			raydir_x;
+	float			raydir_y;
+	float			side_dist_x; //расст кот луч долж пройти от нач позиции до первой стор х
+	float			side_dist_y; //расст кот луч долж пройти от нач позиции до первой стор у
+	float			delta_dist_x; // дина луча от одной стор х до след стор х
+	float			delta_dist_y; // дина луча от одной стор у до след стор у
+	float			perp_wall_dist;
+	int				step_x; //в каком направлении делать шаг по оси x (либо +1, либо -1)
+	int				step_y; //в каком направлении делать шаг по оси y (либо +1, либо -1)
+	int				map_x; // в какой мы клеточке
+	int				map_y; // в какой мы клеточке
+	float			wall_x; // в какое место мы ударились
+	int				tex_x; // x-coord text
 	float			step; // Насколько увеличить координату текстуры на пиксель экрана
-	float			texPos; // Начальная координата текстуры
-	int				texY;
-	int				drawStart;
-	int				drawEnd;
-	int				lineHeight;
+	float			tex_pos; // Начальная координата текстуры
+	int				tex_y;
+	int				draw_start;
+	int				draw_end;
+	int				line_height;
 	int				side;
 	int				hit;
 	struct s_data	*main;
@@ -85,16 +85,16 @@ typedef struct s_raycast
 	struct s_txtr	*txt;
 }			t_raycast;
 
-typedef struct s_txtr
-{
-	int			width;
-	int			height;
-	void		*north;
-	void		*south;
-	void		*west;
-	void		*east;
-	int			buffer[screenHeight][screenWidth];
-}				t_txtr;
+// typedef struct s_txtr
+// {
+// 	int			width;
+// 	int			height;
+// 	void		*north;
+// 	void		*south;
+// 	void		*west;
+// 	void		*east;
+// 	int			buffer[SCREEN_HEIGHT][SCREEN_WIDTH];
+// }				t_txtr;
 
 typedef struct s_data
 {
@@ -107,12 +107,10 @@ typedef struct s_data
 	int			player_base[2];
 	char		playdir;
 	char		**gnln;
-	// void		*mlx;
 	t_textures	*north;
 	t_textures	*south;
 	t_textures	*west;
 	t_textures	*east;
-	t_txtr		*walls;
 	t_raycast	*raycast;
 }				t_data;
 

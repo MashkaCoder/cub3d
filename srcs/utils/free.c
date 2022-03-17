@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 17:04:36 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/17 19:25:01 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	**ft_free_arr(char **arr, int ln)
 {
-	int i;
+	int	i;
 
 	if (arr != NULL)
 	{
@@ -56,9 +56,7 @@ void	ft_free_data(t_data *data)
 				free(*data->gnln);
 			free(data->gnln);
 		}
-		/*if (data->mlx != 0)
-			 действия в этом случае*/
-		//if (data->walls != NULL)
+		free_all_raycast(data);
 		ft_bzero(data, sizeof(t_data));
 		free(data);
 	}

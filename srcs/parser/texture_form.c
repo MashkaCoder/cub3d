@@ -6,11 +6,11 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/21 18:52:46 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/16 01:27:34 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:27:37 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub.h"
+// #include "../cub.h"
 
 // сорри, я немного сюда вмешалась
 void	ft_open_args(t_data *data, t_raycast *raycast)

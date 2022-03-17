@@ -6,7 +6,7 @@
 /*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:07:15 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/16 19:07:16 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:42:22 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ void	init_txt(t_data *main)
 	main->south = malloc(sizeof(t_textures));
 	main->east = malloc(sizeof(t_textures));
 	main->west = malloc(sizeof(t_textures));
+	if (!main->north || !main->south || !main->west || !main->east)
+	{
+		free_txtr(main);
+		exit(EXIT_FAILURE);
+	}
 	load_txt(main);
 }
 
