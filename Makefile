@@ -1,26 +1,30 @@
 NAME = cub3d
 
-CUB = srcs/cub/pognali_epta.c\
+CUB = \
+	srcs/cub/draw_and_search_dz.c\
+	srcs/cub/free.c\
 	srcs/cub/init_struct.c\
 	srcs/cub/keyhook.c\
 	srcs/cub/move.c\
-	srcs/cub/rotate.c\
 	srcs/cub/open_txt.c\
-	srcs/cub/draw_and_search_dz.c\
-	srcs/cub/free.c\
+	srcs/cub/pognali_epta.c\
+	srcs/cub/rotate.c\
 
-GNL = srcs/gnl/get_next_line_utils.c\
+GNL = \
+	srcs/gnl/get_next_line_utils.c\
 	srcs/gnl/get_next_line.c\
 
-PARS =  srcs/parser/check_map.c\
-		srcs/parser/parse_params.c\
-		srcs/parser/parse_rgb.c\
+PARS =  \
+	srcs/parser/check_map.c\
+	srcs/parser/parse_params.c\
+	srcs/parser/parse_rgb.c\
 
-UTILS = srcs/utils/utils.c\
-		srcs/utils/free.c\
-		srcs/utils/str_arr_utils.c\
-		srcs/utils/str_arr_utils2.c\
-		srcs/utils/pixel.c\
+UTILS = \
+	srcs/utils/utils.c\
+	srcs/utils/free.c\
+	srcs/utils/str_arr_utils.c\
+	srcs/utils/str_arr_utils2.c\
+	srcs/utils/pixel.c\
 
 SRC =	${GNL} ${PARS} ${UTILS} ${CUB}\
 		srcs/main.c\
