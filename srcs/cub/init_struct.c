@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:06:28 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/17 19:41:04 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:06:22 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void	init_st_rc2(t_data *main, t_raycast *raycast)
 	}
 }
 
-void	init_key(t_raycast *raycast)
+void	init_key(t_data *main, t_raycast *raycast)
 {
 	t_keys	*keys;
 
 	keys = malloc(sizeof(t_keys));
+	if (keys == NULL)
+		ft_error(main, "Masha don\'t secure malloc init_key", 0);
 	ft_memset(keys, 0, sizeof(t_keys));
 	raycast->keys = keys;
 }
@@ -59,6 +61,6 @@ void	init_st_rc(t_data *main, t_raycast *raycast)
 	main->map[main->player_base[1]][main->player_base[0]] = '0';
 	raycast->plane_x = -raycast->dir_y * 0.66;
 	raycast->plane_y = raycast->dir_x * 0.66;
-	init_key(raycast);
+	init_key(main, raycast);
 	init_txt(main);
 }

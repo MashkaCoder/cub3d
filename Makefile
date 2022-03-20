@@ -2,7 +2,6 @@ NAME = cub3d
 
 CUB = \
 	srcs/cub/draw_and_search_dz.c\
-	srcs/cub/free.c\
 	srcs/cub/init_struct.c\
 	srcs/cub/keyhook.c\
 	srcs/cub/move.c\

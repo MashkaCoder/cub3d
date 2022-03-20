@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 19:38:44 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/17 19:38:45 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:51:18 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,10 @@ char	**ft_arrdup(char **arr);
 char	**ft_arrjoin(char **arr1, char **arr2);
 
 //Очистка памяти (free.c)
-void	ft_context_free_err(t_data *data, char ***tmp, int aln, char *msg);
-void	ft_free_data(t_data *data);
 char	**ft_free_arr(char **arr, int ln);
-
-// cub
-int		dolznoBitVmain(t_data *main, t_raycast *raycast);
+void	ft_free_data(t_data *data);
+void	ft_context_free_err(t_data *data, char ***tmp, int aln, char *msg);
+void	free_txtr(t_data *main);
+void	free_all_raycast(t_raycast *raycast);
 
 #endif

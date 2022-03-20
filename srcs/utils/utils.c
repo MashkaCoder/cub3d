@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 19:09:19 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/05 13:42:25 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:01:52 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_error_fd(t_data *data, char *msg, int op, int fd)
 {
 	if (close(fd) == -1)
-		ft_error(data, "е**ть", 0);
+		ft_error(data, "Close fd error", 0);
 	ft_error(data, msg, op);
 }
 
@@ -42,12 +42,16 @@ int	ft_open(char *flnm)
 
 void	ft_gnl_read(t_data *data, int *gnl, int fd, char **ln)
 {
-	free(*ln);
-	*gnl = ft_get_next_line(fd, ln);
-	if (*gnl == -1)
+	if (*ln != NULL)
 	{
-		if (close(fd) == -1)
-			ft_error(data, "GNL and close", 0);
-		ft_error(data, "GNL", 0);
+		free(*ln);
+		*gnl = ft_get_next_line(fd, ln);
+		if (*gnl == -1)
+		{
+			*ln = NULL;
+			if (close(fd) == -1)
+				ft_error(data, "GNL and close", 0);
+			ft_error(data, "GNL", 0);
+		}
 	}
 }

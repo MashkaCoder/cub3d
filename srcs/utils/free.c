@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/22 18:43:20 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/17 19:25:01 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 16:52:31 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,38 @@ char	**ft_free_arr(char **arr, int ln)
 	return (NULL);
 }
 
+void	free_txtr(t_data *main)
+{
+	if (main->west)
+		free(main->west);
+	if (main->east)
+		free(main->east);
+	if (main->north)
+		free(main->north);
+	if (main->south)
+		free(main->south);
+}
+
+void	free_all_raycast(t_raycast *raycast)
+{
+	if (raycast)
+	{
+		if (raycast->keys)
+			free(raycast->keys);
+		if (raycast->mlx)
+		{
+			if (raycast->pixel && raycast->pixel->img)
+				mlx_destroy_image(raycast->mlx, raycast->pixel->img);
+			if (raycast->win)
+				mlx_destroy_window(raycast->mlx, raycast->win);
+		}
+		if (raycast->pixel)
+			free(raycast->pixel);
+		if (raycast)
+			free(raycast);
+	}
+}
+
 void	ft_free_data(t_data *data)
 {
 	int	i;
@@ -56,7 +88,8 @@ void	ft_free_data(t_data *data)
 				free(*data->gnln);
 			free(data->gnln);
 		}
-		free_all_raycast(data);
+		free_txtr(data);
+		free_all_raycast(data->raycast);
 		ft_bzero(data, sizeof(t_data));
 		free(data);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:56:05 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/17 19:37:43 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:15:33 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	ft_cub(t_data *data)
 
 	raycast = malloc(sizeof(t_raycast));
 	if (!raycast)
-		exit(EXIT_FAILURE);
+		ft_error(data, "malloc ft_cub", 0);
 	data->raycast = raycast;
 	raycast->mlx = mlx_init();
 	init_st_rc(data, raycast);

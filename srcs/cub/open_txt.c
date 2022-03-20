@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_txt.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:07:15 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/17 18:42:22 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:11:27 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ void	init_txt(t_data *main)
 	main->east = malloc(sizeof(t_textures));
 	main->west = malloc(sizeof(t_textures));
 	if (!main->north || !main->south || !main->west || !main->east)
-	{
-		free_txtr(main);
-		exit(EXIT_FAILURE);
-	}
+		ft_error(main, "malloc init_txt", 0);
 	load_txt(main);
 }
 

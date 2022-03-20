@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub_cast.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:04:32 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/17 19:27:37 by chasimir         ###   ########.fr       */
+/*   Updated: 2022/03/20 17:35:10 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		render(t_data *main);
 // init_struct.c
 void	init_st_rc2(t_data *main, t_raycast *raycast);
 void	init_st_rc(t_data *main, t_raycast *raycast);
-void	init_key(t_raycast *raycast);
+void	init_key(t_data *main, t_raycast *raycast);
 
 // open_txt.c
 void	init_txt(t_data *main);
@@ -48,9 +48,5 @@ void	rotate_r(t_raycast *raycast);
 void	draw_line(t_raycast *raycast, t_textures *txt, int y, int x);
 void	seach_draw_and_txt(t_raycast *raycast);
 void	choice_txt(t_raycast *raycast, t_data *main, int x);
-
-//free.c
-void	free_all_raycast(t_data *main);
-void	free_txtr(t_data *main);
 
 #endif
