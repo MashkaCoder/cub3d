@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:07:15 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/20 17:11:27 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:52:10 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ void	init_txt(t_data *main)
 
 void	open_txt(t_data *main, t_textures *txt, char *path)
 {
-	if (access(path, O_RDONLY) == -1)
+	int fd;
+	
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
 		ft_error(main, "Some texture is missing or access is denied\n", 0);
+	else if (close(fd) == -1)
+		ft_error(main, "open_txt", 1);
 	txt->img_ptr = mlx_xpm_file_to_image(main->raycast->mlx,
 			path, &txt->width, &txt->height);
 	txt->img_data = mlx_get_data_addr(txt->img_ptr, &txt->bpp,
