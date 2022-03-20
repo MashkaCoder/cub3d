@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 16:44:14 by scoach            #+#    #+#             */
-/*   Updated: 2022/03/18 16:22:19 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:56:12 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	**ft_arrdup(char **arr)
 	new_arr[i] = NULL;
 	return (new_arr);
 }
- 
+
 int	ft_arr_to_arr(char ***big_arr, char **small_arr, int bln)
 {
 	int	i;

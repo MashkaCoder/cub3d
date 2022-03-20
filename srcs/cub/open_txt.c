@@ -6,7 +6,7 @@
 /*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 19:07:15 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/20 17:52:10 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:56:42 by scoach           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	init_txt(t_data *main)
 
 void	open_txt(t_data *main, t_textures *txt, char *path)
 {
-	int fd;
-	
+	int	fd;
+
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		ft_error(main, "Some texture is missing or access is denied\n", 0);
