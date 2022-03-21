@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cub_cast.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scoach <scoach@student.42.fr>              +#+  +:+       +#+        */
+/*   By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 20:04:32 by chasimir          #+#    #+#             */
-/*   Updated: 2022/03/20 17:35:10 by scoach           ###   ########.fr       */
+/*   Updated: 2022/03/21 19:07:39 by chasimir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB_CAST_H
 # define CUB_CAST_H
 
-// pognali_epta.c
+// raycast.c
 void	init_st_rc(t_data *main, t_raycast *raycast);
 void	calc(t_raycast *raycast, t_data *main);
 int		render(t_data *main);
