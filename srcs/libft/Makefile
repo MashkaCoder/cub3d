@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mariakorcagina <mariakorcagina@student.    +#+  +:+       +#+         #
+#    By: chasimir <chasimir@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/07 16:15:59 by scoach            #+#    #+#              #
-#    Updated: 2022/03/14 00:06:09 by mariakorcag      ###   ########.fr        #
+#    Updated: 2022/03/21 18:19:26 by chasimir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ B_SRCS	=	${SRC}ft_lstnew.c		${SRC}ft_lstlast.c		${SRC}ft_lstclear.c \
 			${SRC}ft_lstsize.c		${SRC}ft_lstdelone.c	${SRC}ft_lstmap.c
 
 OBJS	= $(SRCS:c=o)
+DEP		= $(OBJS:o=d)
 B_OBJS	= $(B_SRCS:c=o)
 
 NAME	= libft.a
@@ -38,12 +39,12 @@ HEADER	= libft.h
 
 RM		= rm -f
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -MMD
 
 AR	= ar rcs
 
-all:		${NAME}	
-	
+all:		${NAME}
+
 
 ${NAME}:	${OBJS}
 	@echo "\n"
@@ -59,7 +60,7 @@ bonus:
 	@make OBJS="${B_OBJS}" all
 
 clean:
-	@${RM} ${OBJS} ${B_OBJS} ${D_FILES}
+	@${RM} ${OBJS} ${B_OBJS} ${D_FILES} $(DEP)
 
 fclean:	clean
 	@${RM} ${NAME}
@@ -67,3 +68,5 @@ fclean:	clean
 re:	fclean all
 
 .PHONY: all clean fclean re bonus
+
+include $(wildcard $(DEP))

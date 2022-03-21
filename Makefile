@@ -1,31 +1,34 @@
 NAME = cub3d
 
 CUB = \
-	srcs/cub/draw_and_search_dz.c\
-	srcs/cub/init_struct.c\
-	srcs/cub/keyhook.c\
-	srcs/cub/move.c\
-	srcs/cub/open_txt.c\
-	srcs/cub/pognali_epta.c\
-	srcs/cub/rotate.c\
+	draw_and_search_dz.c\
+	init_struct.c\
+	keyhook.c\
+	move.c\
+	open_txt.c\
+	raycast.c\
+	rotate.c\
 
 GNL = \
-	srcs/gnl/get_next_line_utils.c\
-	srcs/gnl/get_next_line.c\
+	get_next_line_utils.c\
+	get_next_line.c\
 
 PARS =  \
-	srcs/parser/check_map.c\
-	srcs/parser/parse_params.c\
-	srcs/parser/parse_rgb.c\
+	check_map.c\
+	parse_params.c\
+	parse_rgb.c\
 
 UTILS = \
-	srcs/utils/utils.c\
-	srcs/utils/free.c\
-	srcs/utils/str_arr_utils.c\
-	srcs/utils/str_arr_utils2.c\
-	srcs/utils/pixel.c\
+	utils.c\
+	free.c\
+	str_arr_utils.c\
+	str_arr_utils2.c\
+	pixel.c\
 
-SRC =	${GNL} ${PARS} ${UTILS} ${CUB}\
+SRC =	$(addprefix srcs/gnl/, ${GNL})\
+		$(addprefix srcs/parser/, ${PARS})\
+		$(addprefix srcs/utils/, ${UTILS})\
+		$(addprefix srcs/cub/, ${CUB})\
 		srcs/main.c\
 
 PATH_LIB = srcs/libft/
@@ -37,16 +40,17 @@ LIB = srcs/libft/libft.a
 HDRS = srcs/cub.h
 
 OBJ = $(SRC:c=o)
+DEP = $(OBJ:o=d)
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD
 
 MLX_FLAGS = -L mlx -l mlx -framework OpenGL -framework AppKit
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(HDRS)
+$(NAME): $(OBJ)
 	@echo "\n"
 	@make -C mlx 2>/dev/null
 	@make -C $(PATH_LIB)
@@ -64,7 +68,7 @@ clean:
 	@echo "\033[0;31mCleaning mlx..."
 	@make clean -C mlx
 	@echo "\nRemoving binaries..."
-	@rm -f $(OBJ)
+	@rm -f $(OBJ) $(DEP)
 	@echo "\n\033[0;32mCleaning process is competed!"
 
 fclean: clean
@@ -81,3 +85,5 @@ reclean: re
 	make clean -C $(PATH_LIB)
 
 .PHONY: all clean fclean
+
+include $(wildcard $(DEP))

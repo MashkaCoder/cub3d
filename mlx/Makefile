@@ -21,10 +21,11 @@ $(NOM):	$(OBJ)
 
 %.o: %.c
 	@-printf "\033[0;33mGenerating mlx objects 🔜 %-33.33s\r" $@
-	@-gcc ${CFLAGS} -c $< -o $@ 
+	@-gcc ${CFLAGS} -c $< -o $@
 
 clean:
 	@rm -f $(NOM) $(OBJ) *~
 	@rm -f mlx_app
 
 re: clean all
+
